@@ -21,14 +21,18 @@ ENV['RACK_ENV'] = 'test'
 
 require 'rack/test'
 require 'rspec'
+require 'capybara/rspec'
 
 require File.expand_path '../../app/app.rb', __FILE__
 
+Capybara.current_driver = :webkit
 
 module RSpecMixin
   include Rack::Test::Methods
   def app() Sinatra::Application end
 end
+
+# Capybara.app = Sinatra::Application
 
 RSpec.configure do |config|
   config.include RSpecMixin

@@ -1,13 +1,19 @@
-<h1>Twilio Interface</h1>
+<form action="send_message" method="post">
+  <div>
+    <label for="email">Email:</label>
+    <input type="text" name="email">
+  </div>
 
-<form action="/send_message" method="post">
-  <label for="email">Email:</label>
-  <input type="text" name="email">
+  <div>
+    <label for="authId">Auth ID:</label>
+    <input type="text" name="authId">
+  </div>
 
-  <label for="authId">Auth ID:</label>
-  <input type="text" name="authId">
+  <div>
+    <textarea name="body"></textarea>
+  </div>
 
-  <textarea name="body"></textarea>
-
-  <input type="submit" value="Send">
+  <div>
+    <input type="submit" value="Send">
+  </div>
 </form>
