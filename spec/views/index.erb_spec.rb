@@ -14,7 +14,10 @@ RSpec.describe 'index.erb', type: :view do
     end
 
     it 'should contain all input fields' do
-      expect(body).to have_selector('input[type="text"][name="email"]')
+      expect(body).to have_selector('input[type="text"][name="account_email"]')
+      expect(body).to have_selector('input[type="text"][name="from_number"]')
+      expect(body).to have_selector('input[type="text"][name="to_number"]')
+      expect(body).to have_selector('textarea[name="body"]')
     end
 
     it 'should contain submit' do

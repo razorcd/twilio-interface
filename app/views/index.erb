@@ -1,18 +1,31 @@
 <form action="send_message" method="post">
+  <h4>Account</h4>
   <div>
-    <label for="email">Email:</label>
-    <input type="text" name="email">
+    <label for="account_email">Email:</label>
+    <input type="text" name="account_email">
   </div>
 
   <div>
-    <label for="authId">Auth ID:</label>
-    <input type="text" name="authId">
+    <label for="account_id">ID:</label>
+    <input type="text" name="account_id">
   </div>
 
+
+  <h4>Message</h4>
+  <div>
+    <label for="from_number">From Number:</label>
+    <input type="text" name="from_number">
+  </div>
+  <div>
+    <label for="to_number">To Number:</label>
+    <input type="text" name="to_number">
+  </div>
   <div>
     <textarea name="body"></textarea>
   </div>
 
+
+  <hr>
   <div>
     <input type="submit" value="Send">
   </div>
