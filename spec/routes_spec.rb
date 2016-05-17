@@ -21,9 +21,9 @@ describe "route" do
   context "GET '/list_messages'" do
     before :each do
       class_double(Twilio)
-      twilioDouble = instance_double(Twilio)
-      expect(Twilio).to receive(:new).with({account_id: "accountid", auth_id: "authid"}).and_return(twilioDouble)
-      expect(twilioDouble).to receive(:list_messages).and_return("messages_json")
+      twilio_double = instance_double(Twilio)
+      expect(Twilio).to receive(:new).with({account_id: "accountid", auth_id: "authid"}).and_return(twilio_double)
+      expect(twilio_double).to receive(:list_messages).and_return("messages_json")
     end
 
     it "should allow access" do

@@ -11,5 +11,7 @@ end
 
 get '/list_messages' do
   headers "Content-Type" => "application/json"
+  # params['account_id']= "XXXX"
+  # params['auth_id']= "xxxx"
   Twilio.new(account_id: params['account_id'], auth_id: params['auth_id']).list_messages
 end
