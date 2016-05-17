@@ -10,4 +10,12 @@ describe "route" do
       get '/'
     end
   end
+
+  context "POST '/send_message'" do
+    it "should allow access" do
+      post '/send_message'
+      expect(last_response).to be_ok
+    end
+  end
+
 end
