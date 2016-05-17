@@ -1,3 +1,5 @@
+require "pry"
+
 describe "route" do
   context "GET '/'" do
     it "should allow access" do
@@ -15,6 +17,29 @@ describe "route" do
     it "should allow access" do
       post '/send_message'
       expect(last_response).to be_ok
+    end
+  end
+
+  context "GET '/list_messages'" do
+    before :each do
+      TwilioDouble = double(Twilio)
+      expect(Twilio).to receive(:new).with({account_id: "accountid", auth_id: "authid"}).and_return(TwilioDouble)
+      expect(TwilioDouble).to receive(:list_messages).and_return("messages_json")
+    end
+
+    it "should allow access" do
+      get '/list_messages?account_id=accountid&auth_id=authid'
+      expect(last_response).to be_ok
+    end
+
+    it "should return message list" do
+      get '/list_messages?account_id=accountid&auth_id=authid'
+      expect(last_response.body).to eq "messages_json"
+    end
+
+    it "should return json content type" do
+      get '/list_messages?account_id=accountid&auth_id=authid'
+      expect(last_response.content_type).to match("json")
     end
   end
 
