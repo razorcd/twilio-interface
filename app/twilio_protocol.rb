@@ -16,9 +16,25 @@ class TwilioProtocol
     response= server.request(request)
   end
 
-  # def post body:
-  #   # headers.map {|h| req[h.key]= h.value}
-  # end
+  def post from_number:, to_number:, body:
+    request= Net::HTTP::Post.new(uri.request_uri)
+    request.basic_auth(@account_id, @auth_id)
+    request.set_form_data({
+      "From" => from_number,
+      "To" => to_number,
+      "Body" => body,
+    })
+
+    response = server.request(request)
+
+    # `
+    #   curl -X POST 'https://api.twilio.com/2010-04-01/Accounts/#{@account_id}/Messages.json' \
+    #   --data-urlencode 'From=+17083406400'  \
+    #   --data-urlencode 'To="+40742558551"'  \
+    #   --data-urlencode 'Body="1234"'  \
+    #   -u #{@account_id}:#{@auth_id}
+    # `
+  end
 
 private
 
