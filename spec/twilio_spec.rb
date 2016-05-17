@@ -1,4 +1,3 @@
-require "pry"
 describe "Twilio" do
   it "should be defined" do
     expect(defined? Twilio).to be_truthy
@@ -16,10 +15,29 @@ describe "Twilio" do
       expect(Twilio.instance_method(:send_message)).to be_truthy
     end
 
-    # it "should create new message" do
+    context "when posting message with TwilioProtocol" do
+      let(:tp_double) { instance_double(TwilioProtocol) }
+      let(:post_double) { double }
 
+      before :each do
+        expect(TwilioProtocol).to receive(:new).with(account_id: "accountid", auth_id: "authid").and_return(tp_double)
+        @instance= Twilio.new({account_id: "accountid", auth_id: "authid"})
+      end
 
-    # end
+      it "should be successful for correct params" do
+        expect(tp_double).to receive(:post).with({from_number: "111", to_number: "222", body: "lorem"}).and_return(post_double)
+        expect(post_double).to receive_message_chain(:code, "[]").and_return("2")
+
+        expect(@instance.send_message(from_number: "111", to_number: "222", body: "lorem")).to eq true
+      end
+
+      it "should be unsuccessful for incorrect params" do
+        expect(tp_double).to receive(:post).with({from_number: "", to_number: "", body: "lorem"}).and_return(post_double)
+        expect(post_double).to receive_message_chain(:code, "[]").and_return("4")
+
+        expect(@instance.send_message(from_number: "", to_number: "", body: "lorem")).to eq false
+      end
+    end
   end
 
   context "list_messages method" do
@@ -27,7 +45,7 @@ describe "Twilio" do
       expect(Twilio.instance_method(:list_messages)).to be_truthy
     end
 
-    it "should return message body" do
+    it "should return return TwilioProtocol response" do
       tp_double= instance_double(TwilioProtocol)
       get_double= double
 

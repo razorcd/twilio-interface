@@ -9,15 +9,8 @@ class Twilio
   end
 
   def send_message from_number:, to_number:, body:
-    `
-      curl -X POST 'https://api.twilio.com/2010-04-01/Accounts/#{@account_id}/Messages.json' \
-      --data-urlencode 'From=#{from_number}'  \
-      --data-urlencode 'To=#{to_number}'  \
-      --data-urlencode 'Body=#{body}'  \
-      -u #{@account_id}:#{@auth_id}
-    `
-    # params= { @account_id => @auth_id }
-    # uri.query= URI.encode_www_form(params)
+    response= twilio_tp.post(from_number: from_number, to_number: to_number, body: body)
+    response.code[0]=="2"
   end
 
   def list_messages
