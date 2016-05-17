@@ -1,3 +1,5 @@
+require 'json'
+
 describe "route" do
   context "GET '/'" do
     it "should allow access" do
@@ -8,13 +10,6 @@ describe "route" do
     it "should render :index erb view" do
       expect_any_instance_of(app).to receive(:erb).with(:index)
       get '/'
-    end
-  end
-
-  context "POST '/send_message'" do
-    it "should allow access" do
-      post '/send_message'
-      expect(last_response).to be_ok
     end
   end
 
@@ -42,4 +37,27 @@ describe "route" do
     end
   end
 
+  context "POST '/send_message'" do
+    let(:twilio_double) { instance_double(Twilio) }
+    before :each do
+      class_double(Twilio)
+      expect(Twilio).to receive(:new).with({account_id: "accountid", auth_id: "authid"}).and_return(twilio_double)
+    end
+
+    it "should return success when post message is successful" do
+      expect(twilio_double).to receive(:send_message).with({from_number: "111", to_number: "222", body: "lorem"}).
+          and_return(true)
+
+      post '/send_message', {account_id: "accountid", auth_id: "authid", from_number: "111", to_number: "222", body: "lorem"}
+      expect(last_response.status).to eq 201
+    end
+
+    it "should return failure when post message is NOT successful" do
+      expect(twilio_double).to receive(:send_message).with({from_number: "", to_number: "", body: "lorem"}).
+          and_return(false)
+
+      post '/send_message', {account_id: "accountid", auth_id: "authid", from_number: "", to_number: "", body: "lorem"}
+      expect(last_response.status).to eq 406
+    end
+  end
 end
