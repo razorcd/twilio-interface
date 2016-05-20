@@ -1,5 +1,3 @@
-require 'json'
-
 describe "route" do
   context "GET '/'" do
     it "should allow access" do

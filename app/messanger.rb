@@ -1,4 +1,3 @@
-require 'pry'
 require_relative 'twilio_protocol'
 
 class Messanger
