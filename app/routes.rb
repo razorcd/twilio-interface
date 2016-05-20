@@ -1,4 +1,4 @@
-require_relative "twilio"
+require_relative "messanger"
 
 get '/' do
   erb :index
@@ -11,7 +11,7 @@ post '/send_message' do
   # params['from_number']= "111"
   # params['to_number']= "111"
   # params['body']= "1234567"
-  successful= Twilio.new(account_id: params['account_id'], auth_id: params['auth_id']).
+  successful= Messanger.new(account_id: params['account_id'], auth_id: params['auth_id']).
       send_message(from_number: params['from_number'], to_number: params['to_number'], body: params['body'])
 
 
@@ -29,5 +29,5 @@ get '/list_messages' do
   headers "Content-Type" => "application/json"
   # params['account_id']= "XXXX"
   # params['auth_id']= "xxxx"
-  Twilio.new(account_id: params['account_id'], auth_id: params['auth_id']).list_messages
+  Messanger.new(account_id: params['account_id'], auth_id: params['auth_id']).list_messages
 end
