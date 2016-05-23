@@ -1,17 +1,20 @@
+<div>
+  <label for="account_id">Account id:</label>
+  <input id="account_id" type="text" name="account_id"
+      onblur="var elems = document.getElementsByName('account_id_clone'); for (i in elems) { elems[i].value = this.value }">
+</div>
+
+<div>
+  <label for="auth_id">Auth id:</label>
+  <input id="auth_id" type="text" name="auth_id"
+      onblur="var elems = document.getElementsByName('auth_id_clone'); for (i in elems) { elems[i].value = this.value }">
+</div>
+
+
 <form action="send_message" method="post">
-  <h4>Account</h4>
-  <div>
-    <label for="account_email">Email:</label>
-    <input type="text" name="account_email">
-  </div>
-
-  <div>
-    <label for="account_id">ID:</label>
-    <input type="text" name="account_id">
-  </div>
-
-
   <h4>Message</h4>
+  <input type="hidden" name="account_id_clone">
+  <input type="hidden" name="auth_id_clone">
   <div>
     <label for="from_number">From Number:</label>
     <input type="text" name="from_number">
@@ -30,3 +33,33 @@
     <input type="submit" value="Send">
   </div>
 </form>
+
+<div>
+  <h4>Message list</h4>
+
+  <form action="list_messages" method="get">
+    <input type="hidden" name="account_id_clone">
+    <input type="hidden" name="auth_id_clone">
+    <input type="submit" value="Refresh">
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Body</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Mon May 23 2016 11:07:31</td>
+        <td>+0123456789</td>
+        <td>+0123456789</td>
+        <td>Lorem ipsum dolor sit amet</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

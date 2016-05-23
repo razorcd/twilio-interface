@@ -8,13 +8,19 @@ RSpec.describe 'index.erb', type: :view do
     expect(body).to have_text('Twilio Messaging Interface')
   end
 
+  it 'should contain account_id and auth_id input fields' do
+    expect(body).to have_selector('input[type="text"][name="account_id"]')
+    expect(body).to have_selector('input[type="text"][name="auth_id"]')
+  end
+
   context 'send message form' do
     it 'should exist' do
       expect(body).to have_selector('form[action="send_message"][method="post"]')
     end
 
     it 'should contain all input fields' do
-      expect(body).to have_selector('input[type="text"][name="account_email"]')
+      expect(body).to have_selector('input[name="account_id_clone"]', visible: false)
+      expect(body).to have_selector('input[name="auth_id_clone"]', visible: false)
       expect(body).to have_selector('input[type="text"][name="from_number"]')
       expect(body).to have_selector('input[type="text"][name="to_number"]')
       expect(body).to have_selector('textarea[name="body"]')
@@ -22,6 +28,21 @@ RSpec.describe 'index.erb', type: :view do
 
     it 'should contain submit' do
       expect(body).to have_button("Send")
+    end
+  end
+
+  context 'list messages form' do
+    it 'should exist' do
+      expect(body).to have_selector('form[action="list_messages"][method="get"]')
+    end
+
+    it 'should contain all input fields' do
+      expect(body).to have_selector('input[name="account_id_clone"]', visible: false)
+      expect(body).to have_selector('input[name="auth_id_clone"]', visible: false)
+    end
+
+    it 'should contain submit' do
+      expect(body).to have_button("Refresh")
     end
   end
 
