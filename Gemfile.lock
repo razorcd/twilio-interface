@@ -48,6 +48,7 @@ GEM
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
+    rake (11.1.2)
     rb-fsevent (0.9.7)
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
@@ -80,10 +81,11 @@ PLATFORMS
 DEPENDENCIES
   capybara (~> 2.7.1)
   capybara-webkit (~> 1.11.1)
-  compass
+  compass (~> 1.0.3)
   pry (~> 0.10.3)
   pry-nav
   rack-test
+  rake (~> 11.1.2)
   rspec (~> 3.4.0)
   sinatra (~> 1.4.7)
 

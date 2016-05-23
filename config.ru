@@ -1,7 +1,9 @@
+require 'rake'
 require 'sinatra'
 require './app'
 
-compass_config= File.join(Sinatra::Application.root, 'config', 'compass.rb')
-`compass compile -c #{compass_config}`
+Rake.application.init
+Rake.application.load_rakefile
+Rake.application['SASS:compile'].invoke
 
 run Sinatra::Application
