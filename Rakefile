@@ -1,7 +1,16 @@
 namespace :SASS do
-  desc 'Compiles all SASS files to CSS'
+  desc 'Compiles all asset SASS files to public css'
   task :compile do
     compass_config= File.join(File.dirname(__FILE__), 'config', 'compass.rb')
     `compass compile -c #{compass_config}`
+  end
+end
+
+namespace :JS do
+  desc 'Moves all asset JS files to public js'
+  task :copy do
+    source_js= File.join(File.dirname(__FILE__), 'app', 'assets', 'javascripts', '*')
+    dest_js= File.join(File.dirname(__FILE__), 'public', 'javascripts')
+    `cp -r #{source_js} #{dest_js}`
   end
 end
