@@ -23,7 +23,7 @@ require 'rack/test'
 require 'rspec'
 require 'capybara/rspec'
 
-require File.expand_path '../../app/app.rb', __FILE__
+require File.expand_path '../../app.rb', __FILE__
 
 Capybara.current_driver = :webkit
 

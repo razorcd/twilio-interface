@@ -1,4 +1,4 @@
-describe "route" do
+describe "routes" do
   context "GET '/'" do
     it "should allow access" do
       get '/'
