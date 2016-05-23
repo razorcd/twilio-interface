@@ -9,8 +9,8 @@ RSpec.describe 'index.erb', type: :view do
   end
 
   it 'should contain account_id and auth_id input fields' do
-    expect(body).to have_selector('input[type="text"][name="account_id"]')
-    expect(body).to have_selector('input[type="text"][name="auth_id"]')
+    expect(body).to have_selector('input[type="text"][name="account_id_main"]')
+    expect(body).to have_selector('input[type="text"][name="auth_id_main"]')
   end
 
   context 'send message form' do
@@ -19,8 +19,8 @@ RSpec.describe 'index.erb', type: :view do
     end
 
     it 'should contain all input fields' do
-      expect(body).to have_selector('input[name="account_id_clone"]', visible: false)
-      expect(body).to have_selector('input[name="auth_id_clone"]', visible: false)
+      expect(body).to have_selector('input[name="account_id"]', visible: false)
+      expect(body).to have_selector('input[name="auth_id"]', visible: false)
       expect(body).to have_selector('input[type="text"][name="from_number"]')
       expect(body).to have_selector('input[type="text"][name="to_number"]')
       expect(body).to have_selector('textarea[name="body"]')
@@ -37,8 +37,8 @@ RSpec.describe 'index.erb', type: :view do
     end
 
     it 'should contain all input fields' do
-      expect(body).to have_selector('input[name="account_id_clone"]', visible: false)
-      expect(body).to have_selector('input[name="auth_id_clone"]', visible: false)
+      expect(body).to have_selector('input[name="account_id"]', visible: false)
+      expect(body).to have_selector('input[name="auth_id"]', visible: false)
     end
 
     it 'should contain submit' do
