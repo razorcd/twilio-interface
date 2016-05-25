@@ -1,12 +1,11 @@
 require_relative "messanger"
-require_relative "helpers"
 
 get '/' do
   erb :index
 end
 
 post '/send_message' do
-  strong_params= Helpers.strong_send_message_params params
+  strong_params= strong_send_message_params params
   successful= Messanger.new(account_id: strong_params[:account_id], auth_id: strong_params[:auth_id]).
       send_message(from_number: strong_params[:from_number], to_number: strong_params[:to_number], body: strong_params[:body])
 
@@ -22,6 +21,6 @@ end
 
 get '/list_messages' do
   headers "Content-Type" => "application/json"
-  strong_params= Helpers.strong_list_messages_params params
+  strong_params= strong_list_messages_params params
   Messanger.new(account_id: strong_params[:account_id], auth_id: strong_params[:auth_id]).list_messages
 end

@@ -1,5 +1,7 @@
+require 'tilt/erb'
+
 module Helpers
-  def self.strong_send_message_params params
+  def strong_send_message_params params
     {
       account_id: params["account_id"],
       auth_id: params["auth_id"],
@@ -9,10 +11,15 @@ module Helpers
     }
   end
 
-  def self.strong_list_messages_params params
+  def strong_list_messages_params params
     {
       account_id: params["account_id"],
       auth_id: params["auth_id"],
     }
+  end
+
+  # e.g.: <%= render_erb_partial :"partials/refresh_form", :locals => {name: "lorem ipsum"} %>
+  def render_erb_partial(*args)
+    render :erb, *args, layout: false
   end
 end
