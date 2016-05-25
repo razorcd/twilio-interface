@@ -1,0 +1,68 @@
+@import 'vars';
+
+@mixin text-field($height) {
+  box-sizing: border-box;
+  display: inline-block;
+  width: $input-field-width;
+  height: $height;
+  border: 1px solid $grey-border-color;
+  border-radius: 4px;
+  margin: 0 10px 0 0;
+  font-size: 1em;
+  padding: 0.4em;
+  outline: 0;
+  &:focus {
+    box-shadow: 0px 0px 10px 1px rgba(173,240,191,1);
+  }
+}
+
+@mixin label-field($height) {
+  box-sizing: border-box;
+  display: inline-block;
+  width: $input-labels-width;
+  height: $height;
+  text-align: right;
+}
+
+@mixin submit-field($height) {
+  box-sizing: border-box;
+  margin-left: $input-labels-width + 8px;
+  width: $input-field-width;
+  background-color: $green-fresh-color;
+  border: 0;
+  border-radius: 4px;
+  height: $height;
+  font-size: 1em;
+  font-weight: bold;
+  color: #ffffff;
+
+  &:hover {
+    cursor: pointer;
+    background-color: lighten($green-fresh-color, 2%);
+  }
+}
+
+@mixin form-field($height) {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  height: $height;
+  margin: 15px 0;
+
+  label{
+    @include label-field($height);
+  }
+
+  input[type='text'] {
+    @include text-field($height);
+  }
+
+  input[type='submit'] {
+    @include submit-field($height);
+  }
+
+  textarea {
+    @include text-field($height);
+    resize: none;
+  }
+}
