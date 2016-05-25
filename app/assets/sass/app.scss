@@ -95,3 +95,22 @@ body {
 .form-field-200 {
   @include form-field(200px);
 }
+
+
+
+
+// table start
+.table-field {
+  width: 100%;
+  border-collapse: collapse;
+  thead {}
+  tbody {
+    font-size: 0.6em;
+    th, td {
+      margin: 0;
+      padding: 5px;
+      border-bottom: 1px solid #cccccc;
+    }
+  }
+}
+// table end
