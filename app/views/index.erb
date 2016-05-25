@@ -1,42 +1,41 @@
-<div>
+<div class="input-field">
   <label for="account_id">Account id:</label>
   <input type="text" name="account_id_main"
       onblur="var elems = document.getElementsByName('account_id'); for (i in elems) { elems[i].value = this.value }">
 </div>
 
-<div>
+<div class="input-field">
   <label for="auth_id">Auth id:</label>
   <input type="text" name="auth_id_main"
       onblur="var elems = document.getElementsByName('auth_id'); for (i in elems) { elems[i].value = this.value }">
 </div>
 
+<br/>
 
 <form action="send_message" method="post">
-  <h4>Message</h4>
   <input type="hidden" name="account_id">
   <input type="hidden" name="auth_id">
-  <div>
+  <div class="input-field">
     <label for="from_number">From Number:</label>
     <input type="text" name="from_number">
   </div>
-  <div>
+  <div class="input-field">
     <label for="to_number">To Number:</label>
     <input type="text" name="to_number">
   </div>
-  <div>
+  <div class="input-field">
+    <label for="body"></label>
     <textarea name="body"></textarea>
   </div>
-
-
   <hr>
   <div>
     <input type="submit" value="Send">
   </div>
 </form>
 
-<div>
-  <h4>Message list</h4>
+<br/>
 
+<div>
   <form action="list_messages" method="get">
     <input type="hidden" name="account_id">
     <input type="hidden" name="auth_id">
