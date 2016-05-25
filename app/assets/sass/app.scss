@@ -1,8 +1,8 @@
-@mixin input-field { //($width, $height) {
+@mixin input-field($height) {
   box-sizing: border-box;
-  // width: $width;
-  // height: $height;
+  display: inline-block;
   width: calc(100% - 300px);
+  height: $height;
   border: 1px solid #bbbbbb;
   border-radius: 4px;
   margin: 0 10px 0 0;
@@ -12,9 +12,41 @@
 }
 
 
+@mixin label-field($height) {
+  box-sizing: border-box;
+  display: inline-block;
+  width: 180px;
+  height: $height;
+  text-align: right;
+}
+
+
+@mixin form-field($height) {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  height: $height;
+  margin: 15px 0;
+
+  label{
+    @include label-field($height);
+  }
+
+  input[type='text'] {
+    @include input-field($height);
+  }
+
+  textarea {
+    @include input-field($height);
+  }
+}
+
+
+
 html {
   box-sizing: border-box;
   font-size: 1.4em;
+  font-family: Verdana, Geneva, sans-serif;
 }
 *, *:before, *:after {
   box-sizing: inherit;
@@ -30,26 +62,10 @@ body {
   margin: 50px 0;
 }
 
-.input-field {
-  box-sizing: border-box;
-  width: 100%;
-  margin: 15px 0;
-
-  label {
-    box-sizing: border-box;
-    display: inline-block;
-    width: 150px;
-    text-align: right;
-  }
-
-  input[type='text'] {
-    @include input-field()
-  }
-
-  textarea {
-    @include input-field();
-    height: 200px;
-  }
-
+.form-field-50 {
+  @include form-field(50px);
 }
 
+.form-field-200 {
+  @include form-field(200px);
+}
