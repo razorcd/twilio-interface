@@ -21,6 +21,38 @@ header {
   margin: 50px 0;
 }
 
+.button-success {
+  @include button;
+  @include button-success;
+}
+
+.button-default {
+  @include button;
+  @include button-default;
+}
+
+.table-field {
+  width: 100%;
+  border-collapse: collapse;
+  thead {
+    text-align: left;
+    tr>th:not(:last-child){
+      width: 20%;
+    }
+    tr>th:last-child{
+      width: 40%;
+    }
+  }
+  tbody {
+    font-size: 0.6em;
+    th, td {
+      margin: 0;
+      padding: 5px;
+      border-bottom: 1px solid $grey-border-color;
+    }
+  }
+}
+
 main {
   margin: 8px;
 
@@ -30,20 +62,6 @@ main {
 
   .form-field-200 {
     @include form-field(200px);
-  }
-
-  .table-field {
-    width: 100%;
-    border-collapse: collapse;
-    thead {}
-    tbody {
-      font-size: 0.6em;
-      th, td {
-        margin: 0;
-        padding: 5px;
-        border-bottom: 1px solid $grey-border-color;
-      }
-    }
   }
 }
 

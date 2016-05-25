@@ -25,21 +25,9 @@
 }
 
 @mixin submit-field($height) {
-  box-sizing: border-box;
   margin-left: $input-labels-width + 8px;
   width: $input-field-width;
-  background-color: $green-fresh-color;
-  border: 0;
-  border-radius: 4px;
   height: $height;
-  font-size: 1em;
-  font-weight: bold;
-  color: #ffffff;
-
-  &:hover {
-    cursor: pointer;
-    background-color: lighten($green-fresh-color, 2%);
-  }
 }
 
 @mixin form-field($height) {
@@ -59,10 +47,40 @@
 
   input[type='submit'] {
     @include submit-field($height);
+    font-size: 1em;
+    font-weight: bold;
   }
 
   textarea {
     @include text-field($height);
     resize: none;
+  }
+}
+
+
+@mixin button {
+  box-sizing: border-box;
+  padding: 5px 10px;
+  border: 0;
+  border-radius: 4px;
+  font-size: 0.75em;
+  color: #ffffff;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+@mixin button-default {
+  background-color: $button-default-color;
+  &:hover {
+    background-color: lighten($button-default-color, 2%);
+  }
+}
+
+@mixin button-success {
+  background-color: $button-success-color;
+  &:hover {
+    background-color: lighten($button-success-color, 2%);
   }
 }
