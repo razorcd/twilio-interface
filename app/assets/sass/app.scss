@@ -3,12 +3,15 @@
   display: inline-block;
   width: calc(100% - 300px);
   height: $height;
-  border: 1px solid #bbbbbb;
+  border: 1px solid #cccccc;
   border-radius: 4px;
   margin: 0 10px 0 0;
   font-size: 1em;
   padding: 0.4em;
   outline: 0;
+  &:focus {
+    box-shadow: 0px 0px 10px 1px rgba(173,240,191,1);
+  }
 }
 
 
@@ -21,9 +24,10 @@
 }
 
 @mixin submit-field($height) {
-  margin-left: 190px;
+  box-sizing: border-box;
+  margin-left: 188px;
   width: calc(100% - 300px);
-  background-color: #00FF47;
+  background-color: #00EC41;
   border: 0;
   border-radius: 4px;
   height: $height;
@@ -33,7 +37,7 @@
 
   &:hover {
     cursor: pointer;
-    background-color: #44FF78;
+    background-color: #1DFF5C;
   }
 }
 
@@ -58,6 +62,7 @@
 
   textarea {
     @include text-field($height);
+    resize: none;
   }
 }
 
