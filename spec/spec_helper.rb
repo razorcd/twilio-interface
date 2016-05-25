@@ -29,7 +29,7 @@ Capybara.current_driver = :webkit
 
 module RSpecMixin
   include Rack::Test::Methods
-  def app() Sinatra::Application end
+  def app; Sinatra::Application end
 end
 
 # Capybara.app = Sinatra::Application

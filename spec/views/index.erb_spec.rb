@@ -1,7 +1,9 @@
 RSpec.describe 'index.erb', type: :view do
-  let(:body) do
+  before :each do
     app.get("/test") do erb :index; end
-    get("/test").body
+    def body
+      get("/test").body
+    end
   end
 
   it 'should contain title' do
@@ -31,18 +33,10 @@ RSpec.describe 'index.erb', type: :view do
     end
   end
 
-  context 'list messages form' do
-    it 'should exist' do
-      expect(body).to have_selector('form[action="list_messages"][method="get"]')
-    end
-
-    it 'should contain all input fields' do
-      expect(body).to have_selector('input[name="account_id"]', visible: false)
-      expect(body).to have_selector('input[name="auth_id"]', visible: false)
-    end
-
-    it 'should contain submit' do
-      expect(body).to have_button("Refresh")
+  context 'list messages refresh' do
+    it 'should load refresh_form partial' do
+      expect_any_instance_of(Sinatra::Application).to receive(:render_erb_partial).with(:"partials/refresh_form")
+      body
     end
   end
 

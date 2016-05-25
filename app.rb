@@ -6,8 +6,6 @@ set :public_folder, 'public'
 set :views, 'app/views'
 
 require "./app/helpers"
-helpers do
-  include Helpers
-end
+helpers Helpers
 
 require './app/controllers'
