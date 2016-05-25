@@ -79,38 +79,46 @@ html {
 }
 
 body {
-  margin: 8px;
+  margin: 0;
 }
 
-.main-title {
+header {
   width: 100%;
   text-align: center;
   margin: 50px 0;
 }
 
-.form-field-50 {
-  @include form-field(50px);
-}
+main {
+  margin: 8px;
 
-.form-field-200 {
-  @include form-field(200px);
-}
+  .form-field-50 {
+    @include form-field(50px);
+  }
 
+  .form-field-200 {
+    @include form-field(200px);
+  }
 
-
-
-// table start
-.table-field {
-  width: 100%;
-  border-collapse: collapse;
-  thead {}
-  tbody {
-    font-size: 0.6em;
-    th, td {
-      margin: 0;
-      padding: 5px;
-      border-bottom: 1px solid #cccccc;
+  .table-field {
+    width: 100%;
+    border-collapse: collapse;
+    thead {}
+    tbody {
+      font-size: 0.6em;
+      th, td {
+        margin: 0;
+        padding: 5px;
+        border-bottom: 1px solid #cccccc;
+      }
     }
   }
 }
-// table end
+
+footer {
+  margin-top: 25px;
+  padding: 5px;
+  background-color: #EBEBEB;
+  text-align: center;
+  font-size: 0.6em;
+  color: #999999;
+}

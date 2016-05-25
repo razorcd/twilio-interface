@@ -7,6 +7,7 @@
     <script type="text/javascript" src="/javascripts/app.js"></script>
   </head>
   <body>
+
     <% if defined? success_flash %>
       <h4 class="success_flash"><%= success_flash %></h4>
     <% end %>
@@ -14,8 +15,15 @@
       <h3 class="error_flash"><%= error_flash %></h3>
     <% end %>
 
-    <h1 class="main-title">Twilio Messaging Interface</h1>
-    <%= yield %>
+    <header>
+      <h1>Twilio Messaging Interface</h1>
+    </header>
+
+    <main>
+      <%= yield %>
+    </main>
+
     <footer>c</footer>
+
   </body>
 </html>
