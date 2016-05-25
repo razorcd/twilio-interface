@@ -23,3 +23,5 @@ module Helpers
     render :erb, *args, layout: false
   end
 end
+
+helpers Helpers if defined? helpers
