@@ -36,11 +36,7 @@
 <br/>
 
 <div>
-  <form action="list_messages" method="get">
-    <input type="hidden" name="account_id">
-    <input type="hidden" name="auth_id">
-    <input class="button-default" type="submit" value="Refresh">
-  </form>
+  <%= erb(:"partials/refresh_form", :layout => false) %>
 
   <table class="table-field">
     <thead>
