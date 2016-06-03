@@ -48,6 +48,7 @@ describe "controllers" do
 
       post '/send_message', {account_id: "accountid", auth_id: "authid", from_number: "111", to_number: "222", body: "lorem"}
       expect(last_response.status).to eq 201
+      expect(JSON.parse(last_response.body).keys).to include("flash_message")
     end
 
     it "should return failure when post message is NOT successful" do
@@ -56,6 +57,7 @@ describe "controllers" do
 
       post '/send_message', {account_id: "accountid", auth_id: "authid", from_number: "", to_number: "", body: "lorem"}
       expect(last_response.status).to eq 406
+      expect(JSON.parse(last_response.body).keys).to include("flash_message")
     end
   end
 end

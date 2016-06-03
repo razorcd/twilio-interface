@@ -1,3 +1,4 @@
+require 'json'
 require_relative "messanger"
 
 get '/' do
@@ -12,15 +13,17 @@ post '/send_message' do
 
   headers "Content-Type" => "application/json"
   successful ? status(201) : status(406)
-  # if successful
-  #   erb(:index, locals: {success_flash: "SUCCESS FLASH"})
-  # else
-  #   erb(:index, locals: {error_flash: "ERROR FLASH"})
-  # end
+
+  if successful
+    {flash_message: "SUCCESS FLASH"}.to_json
+  else
+    {flash_message: "ERROR FLASH"}.to_json
+  end
 end
 
 get '/list_messages' do
   headers "Content-Type" => "application/json"
   strong_params= strong_list_messages_params params
-  Messanger.new(account_id: strong_params[:account_id], auth_id: strong_params[:auth_id]).list_messages
+  Messanger.new(account_id: strong_params[:account_id], auth_id: strong_params[:auth_id]).
+    list_messages
 end
