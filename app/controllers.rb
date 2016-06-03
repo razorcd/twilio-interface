@@ -7,16 +7,12 @@ end
 
 post '/send_message' do
   strong_params= strong_send_message_params params
-  successful= Messanger.new(account_id: strong_params[:account_id], auth_id: strong_params[:auth_id]).
-      send_message(from_number: strong_params[:from_number], to_number: strong_params[:to_number], body: strong_params[:body])
-
-
   headers "Content-Type" => "application/json"
-  successful ? status(201) : status(406)
-
-  if successful
+  if message_sent?(params: strong_params)
+    status(201)
     {flash_message: "SUCCESS FLASH"}.to_json
   else
+    status(406)
     {flash_message: "ERROR FLASH"}.to_json
   end
 end
@@ -24,7 +20,14 @@ end
 get '/list_messages' do
   headers "Content-Type" => "application/json"
   strong_params= strong_list_messages_params params
-  Messanger.new(account_id: strong_params[:account_id], auth_id: strong_params[:auth_id]).
-    list_messages.
-    to_json
+  messages_list(params: strong_params).to_json
+end
+
+def message_sent? params:
+  Messanger.new(account_id: params[:account_id], auth_id: params[:auth_id]).
+      send_message(from_number: params[:from_number], to_number: params[:to_number], body: params[:body])
+end
+
+def messages_list params:
+  Messanger.new(account_id: params[:account_id], auth_id: params[:auth_id]).list_messages
 end
