@@ -25,5 +25,6 @@ get '/list_messages' do
   headers "Content-Type" => "application/json"
   strong_params= strong_list_messages_params params
   Messanger.new(account_id: strong_params[:account_id], auth_id: strong_params[:auth_id]).
-    list_messages
+    list_messages.
+    to_json
 end

@@ -16,7 +16,7 @@ describe "controllers" do
       class_double(Messanger)
       messanger_double = instance_double(Messanger)
       expect(Messanger).to receive(:new).with({account_id: "accountid", auth_id: "authid"}).and_return(messanger_double)
-      expect(messanger_double).to receive(:list_messages).and_return("messages_json")
+      expect(messanger_double).to receive(:list_messages).and_return({messages: "data"})
     end
 
     it "should allow access" do
@@ -26,12 +26,12 @@ describe "controllers" do
 
     it "should return message list" do
       get '/list_messages?account_id=accountid&auth_id=authid'
-      expect(last_response.body).to eq "messages_json"
+      expect(last_response.body).to eq('{"messages":"data"}')
     end
 
     it "should return json content type" do
       get '/list_messages?account_id=accountid&auth_id=authid'
-      expect(last_response.content_type).to match("json")
+      expect(last_response.content_type).to match("application/json")
     end
   end
 
