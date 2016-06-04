@@ -39,26 +39,6 @@
   <%= render_erb_partial :"partials/refresh_form", locals: {account: account} %>
 
   <% if defined?(message_list) %>
-    <table class="table-field">
-      <thead>
-        <tr>
-          <th>Date Sent</th>
-          <th>To</th>
-          <th>From</th>
-          <th>Body</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% message_list.each do |message| %>
-          <tr>
-            <td><%= message["date_sent"] %></td>
-            <td><%= message["to"] %></td>
-            <td><%= message["from"] %></td>
-            <td><%= message["body"] %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+    <%= render_erb_partial :"partials/message_list", locals: {message_list: message_list} %>
   <% end %>
-
 </div>
