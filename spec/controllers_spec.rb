@@ -25,13 +25,9 @@ describe "controllers" do
     end
 
     it "should return message list" do
-      get '/list_messages?account_id=accountid&auth_id=authid'
-      expect(last_response.body).to eq('{"messages":"data"}')
-    end
+      expect_any_instance_of(app).to receive(:erb).with(:index, locals: {account: {account_id: "accountid", auth_id: "authid"}, message_list: {messages: "data"}})
 
-    it "should return json content type" do
       get '/list_messages?account_id=accountid&auth_id=authid'
-      expect(last_response.content_type).to match("application/json")
     end
   end
 
