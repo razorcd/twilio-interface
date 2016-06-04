@@ -7,13 +7,7 @@
     <script type="text/javascript" src="/javascripts/app.js"></script>
   </head>
   <body>
-
-    <% if defined? success_flash %>
-      <h4 class="success_flash"><%= success_flash %></h4>
-    <% end %>
-    <% if defined? error_flash %>
-      <h3 class="error_flash"><%= error_flash %></h3>
-    <% end %>
+    <%= render_erb_partial(:"partials/flash", locals: {flash: flash}) if defined?(flash)%>
 
     <header>
       <h1>Twilio Messaging Interface</h1>

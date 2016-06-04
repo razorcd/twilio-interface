@@ -41,7 +41,7 @@ describe "controllers" do
     end
 
     it "should return success when post message is successful" do
-      success_erb_params= [:index, locals: {account: {account_id: "accountid", auth_id: "authid"}, success_flash: "SUCCESS FLASH"}]
+      success_erb_params= [:index, locals: {account: {account_id: "accountid", auth_id: "authid"}, flash: {success_flash: "SUCCESS FLASH"}}]
       expect_any_instance_of(app).to receive(:erb).with(*success_erb_params)
       expect(messanger_double).to receive(:send_message).with({from_number: "111", to_number: "222", body: "lorem"}).
           and_return(true)
@@ -50,7 +50,7 @@ describe "controllers" do
     end
 
     it "should return failure when post message is NOT successful" do
-      success_erb_params= [:index, locals: {account: {account_id: "accountid", auth_id: "authid"}, error_flash: "ERROR FLASH"}]
+      success_erb_params= [:index, locals: {account: {account_id: "accountid", auth_id: "authid"}, flash: {error_flash: "ERROR FLASH"}}]
       expect_any_instance_of(app).to receive(:erb).with(*success_erb_params)
       expect(messanger_double).to receive(:send_message).with({from_number: "", to_number: "", body: "lorem"}).
           and_return(false)

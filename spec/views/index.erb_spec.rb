@@ -89,18 +89,23 @@ RSpec.describe 'index.erb', type: :view do
     end
   end
 
+
+
+
   context 'with flash messages' do
     let(:body_with_flash) do
       app.get("/test_index_with_flash") do
-        erb(:index, locals: {account: {}, success_flash: "SUCCESS FLASH", error_flash: "ERROR FLASH"})
+        erb(:index, locals: {account: {}, flash: {success_flash: "SUCCESS FLASH", error_flash: "ERROR FLASH"}})
       end
       get("/test_index_with_flash").body
     end
-    it 'should show success flash' do
-      expect(body_with_flash).to have_selector('[class="success_flash"]')
-    end
-    it 'should show error flash' do
-      expect(body_with_flash).to have_selector('[class="error_flash"]')
+
+    it 'should load flash partial' do
+      allow_any_instance_of(Sinatra::Application).to receive(:render_erb_partial).with(:"partials/refresh_form", locals: {account: {}})
+      expect_any_instance_of(Sinatra::Application).to receive(:render_erb_partial).
+          with(:"partials/flash", locals: {flash: {success_flash: "SUCCESS FLASH", error_flash: "ERROR FLASH"}})
+
+      body_with_flash
     end
   end
 
@@ -111,11 +116,13 @@ RSpec.describe 'index.erb', type: :view do
       end
       get("/test_index_without_flash").body
     end
-    it 'should not show success flash' do
-      expect(body_without_flash).not_to have_selector('[class="success_flash"]')
-    end
-    it 'should not show error flash' do
-      expect(body_without_flash).not_to have_selector('[class="error_flash"]')
+
+    it 'should not load flash partial' do
+      allow_any_instance_of(Sinatra::Application).to receive(:render_erb_partial).with(:"partials/refresh_form", locals: {account: {}})
+      expect_any_instance_of(Sinatra::Application).not_to receive(:render_erb_partial).
+          with(:"partials/flash", locals: {})
+
+      body_without_flash
     end
   end
 
