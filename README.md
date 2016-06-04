@@ -12,3 +12,5 @@ Interface for messaging with Twilio
 [] extract list_messsages in a partial
 [] style flash messages
 [] separate send_message form and list_messages in 2 views
+[] deploy to Heroku and add CI (Travis?)
+[] add test coverage (coveralls?)
