@@ -9,3 +9,6 @@ Interface for messaging with Twilio
 - to run tests run `rspec`
 
 #TODO
+[] extract list_messsages in a partial
+[] style flash messages
+[] separate send_message form and list_messages in 2 views
