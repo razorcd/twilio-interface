@@ -6,7 +6,7 @@ describe "controllers" do
     end
 
     it "should render :index erb view" do
-      expect_any_instance_of(app).to receive(:erb).with(:index)
+      expect_any_instance_of(app).to receive(:erb).with(:index, locals: {account: {}})
       get '/'
     end
   end
@@ -43,21 +43,21 @@ describe "controllers" do
     end
 
     it "should return success when post message is successful" do
+      success_erb_params= [:index, locals: {account: {account_id: "accountid", auth_id: "authid"}, success_flash: "SUCCESS FLASH"}]
+      expect_any_instance_of(app).to receive(:erb).with(*success_erb_params)
       expect(messanger_double).to receive(:send_message).with({from_number: "111", to_number: "222", body: "lorem"}).
           and_return(true)
 
       post '/send_message', {account_id: "accountid", auth_id: "authid", from_number: "111", to_number: "222", body: "lorem"}
-      expect(last_response.status).to eq 201
-      expect(JSON.parse(last_response.body).keys).to include("flash_message")
     end
 
     it "should return failure when post message is NOT successful" do
+      success_erb_params= [:index, locals: {account: {account_id: "accountid", auth_id: "authid"}, error_flash: "ERROR FLASH"}]
+      expect_any_instance_of(app).to receive(:erb).with(*success_erb_params)
       expect(messanger_double).to receive(:send_message).with({from_number: "", to_number: "", body: "lorem"}).
           and_return(false)
 
       post '/send_message', {account_id: "accountid", auth_id: "authid", from_number: "", to_number: "", body: "lorem"}
-      expect(last_response.status).to eq 406
-      expect(JSON.parse(last_response.body).keys).to include("flash_message")
     end
   end
 end

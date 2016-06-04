@@ -2,18 +2,16 @@ require 'json'
 require_relative "messanger"
 
 get '/' do
-  erb :index
+  erb :index, locals: {account: {}}
 end
 
 post '/send_message' do
   strong_params= strong_send_message_params params
-  headers "Content-Type" => "application/json"
+
   if message_sent?(params: strong_params)
-    status(201)
-    {flash_message: "SUCCESS FLASH"}.to_json
+    erb :index, locals: {account: credentials_from(params: strong_params), success_flash: "SUCCESS FLASH"}
   else
-    status(406)
-    {flash_message: "ERROR FLASH"}.to_json
+    erb :index, locals: {account: credentials_from(params: strong_params), error_flash: "ERROR FLASH"}
   end
 end
 
@@ -30,4 +28,8 @@ end
 
 def messages_list params:
   Messanger.new(account_id: params[:account_id], auth_id: params[:auth_id]).list_messages
+end
+
+def credentials_from params:
+  {account_id: params[:account_id], auth_id: params[:auth_id]}
 end
