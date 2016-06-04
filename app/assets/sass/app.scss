@@ -73,3 +73,16 @@ footer {
   font-size: 0.6em;
   color: #999999;
 }
+
+.flash {
+  width: calc(100% - 10px);
+  height: 50px;
+  color: #ffffff;
+  border-radius: 4px;
+  margin: 5px;
+  padding: 15px 30px;
+  font-size: 0.75em;
+
+  &.success_flash { background-color: #7AD755; }
+  &.error_flash { background-color: #EF7070; }
+}

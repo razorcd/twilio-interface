@@ -8,11 +8,11 @@ RSpec.describe 'partials/flash.erb', type: :view do
     end
 
     it 'should show success flash' do
-      expect(with_flash_body).to have_selector('[class="success_flash"]')
+      expect(with_flash_body).to have_selector('[class="flash success_flash"]')
     end
 
     it 'should show error flash' do
-      expect(with_flash_body).to have_selector('[class="error_flash"]')
+      expect(with_flash_body).to have_selector('[class="flash error_flash"]')
     end
   end
 
@@ -25,11 +25,11 @@ RSpec.describe 'partials/flash.erb', type: :view do
     end
 
     it 'should not show success flash' do
-      expect(without_flash_body).not_to have_selector('[class="success_flash"]')
+      expect(without_flash_body).not_to have_selector('[class="flash success_flash"]')
     end
 
     it 'should not show error flash' do
-      expect(without_flash_body).not_to have_selector('[class="error_flash"]')
+      expect(without_flash_body).not_to have_selector('[class="flash error_flash"]')
     end
   end
 end
