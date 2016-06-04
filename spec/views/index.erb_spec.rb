@@ -63,9 +63,28 @@ RSpec.describe 'index.erb', type: :view do
 
   context 'list messages refresh' do
     it 'should load refresh_form partial' do
+      allow_any_instance_of(Sinatra::Application).to receive(:render_erb_partial).with(:"partials/message_list", locals: {message_list: []})
       set_rendered_with locals: {account: {}}
 
       expect_any_instance_of(Sinatra::Application).to receive(:render_erb_partial).with(:"partials/refresh_form", locals: {account: {}})
+      body
+    end
+  end
+
+  context 'list messages table' do
+    it 'should load message_list partial if message_list exists' do
+      allow_any_instance_of(Sinatra::Application).to receive(:render_erb_partial).with(:"partials/refresh_form", locals: {account: {}})
+      set_rendered_with locals: {account: {}, message_list: []}
+
+      expect_any_instance_of(Sinatra::Application).to receive(:render_erb_partial).with(:"partials/message_list", locals: {message_list: []})
+      body
+    end
+
+    it 'should NOT load message_list partial if no message_list exists' do
+      allow_any_instance_of(Sinatra::Application).to receive(:render_erb_partial).with(:"partials/refresh_form", locals: {account: {}})
+      set_rendered_with locals: {account: {}}
+
+      expect_any_instance_of(Sinatra::Application).not_to receive(:render_erb_partial).with(:"partials/message_list", locals: {account: {}})
       body
     end
   end
