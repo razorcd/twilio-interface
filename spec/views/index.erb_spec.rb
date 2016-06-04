@@ -1,26 +1,45 @@
 RSpec.describe 'index.erb', type: :view do
   before :each do
-    app.get("/test") do erb :index; end
+    @unique_id= rand(9999999999999999999)
+    def set_rendered_with locals:
+      app.get("/test_#{@unique_id}") do erb :index, locals: locals; end
+    end
+
     def body
-      get("/test").body
+      get("/test_#{@unique_id}").body
     end
   end
 
   it 'should contain title' do
+    set_rendered_with locals: {account: {}}
+
     expect(body).to have_text('Twilio Messaging Interface')
   end
 
   it 'should contain account_id and auth_id input fields' do
+    set_rendered_with locals: {account: {}}
+
     expect(body).to have_selector('input[type="text"][name="account_id_main"]')
     expect(body).to have_selector('input[type="text"][name="auth_id_main"]')
   end
 
+  it 'should contain account_id and auth_id input fields with specified values' do
+    set_rendered_with locals: {account: {account_id: "account_id", auth_id: "auth_id"}}
+
+    expect(body).to have_selector('input[type="text"][name="account_id_main"][value="account_id"]')
+    expect(body).to have_selector('input[type="text"][name="auth_id_main"][value="auth_id"]')
+  end
+
   context 'send message form' do
     it 'should exist' do
+      set_rendered_with locals: {account: {}}
+
       expect(body).to have_selector('form[action="send_message"][method="post"]')
     end
 
     it 'should contain all input fields' do
+      set_rendered_with locals: {account: {}}
+
       expect(body).to have_selector('input[name="account_id"]', visible: false)
       expect(body).to have_selector('input[name="auth_id"]', visible: false)
       expect(body).to have_selector('input[type="text"][name="from_number"]')
@@ -28,14 +47,25 @@ RSpec.describe 'index.erb', type: :view do
       expect(body).to have_selector('textarea[name="body"]')
     end
 
+    it 'should contain all input fields' do
+      set_rendered_with locals: {account: {account_id: "account_id", auth_id: "auth_id"}}
+
+      expect(body).to have_selector('input[name="account_id"][value="account_id"]', visible: false)
+      expect(body).to have_selector('input[name="auth_id"][value="auth_id"]', visible: false)
+    end
+
     it 'should contain submit' do
+      set_rendered_with locals: {account: {}}
+
       expect(body).to have_button("Send")
     end
   end
 
   context 'list messages refresh' do
     it 'should load refresh_form partial' do
-      expect_any_instance_of(Sinatra::Application).to receive(:render_erb_partial).with(:"partials/refresh_form")
+      set_rendered_with locals: {account: {}}
+
+      expect_any_instance_of(Sinatra::Application).to receive(:render_erb_partial).with(:"partials/refresh_form", locals: {account: {}})
       body
     end
   end
@@ -43,7 +73,7 @@ RSpec.describe 'index.erb', type: :view do
   context 'with flash messages' do
     let(:body_with_flash) do
       app.get("/test_with_flash") do
-        erb(:index, locals: {success_flash: "SUCCESS FLASH", error_flash: "ERROR FLASH"})
+        erb(:index, locals: {account: {}, success_flash: "SUCCESS FLASH", error_flash: "ERROR FLASH"})
       end
       get("/test_with_flash").body
     end
@@ -58,7 +88,7 @@ RSpec.describe 'index.erb', type: :view do
   context 'without flash messages' do
     let(:body_without_flash) do
       app.get("/test_without_flash") do
-        erb(:index, locals: {})
+        erb(:index, locals: {account: {}})
       end
       get("/test_without_flash").body
     end

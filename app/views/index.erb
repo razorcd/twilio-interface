@@ -1,20 +1,20 @@
 <div class="form-field-50">
   <label for="account_id">Account id</label>
-  <input type="text" name="account_id_main"
+  <input type="text" name="account_id_main" value="<%= account[:account_id] %>"
       onblur="var elems = document.getElementsByName('account_id'); for (i in elems) { elems[i].value = this.value }">
 </div>
 
 <div class="form-field-50">
   <label for="auth_id">Auth id</label>
-  <input type="text" name="auth_id_main"
+  <input type="text" name="auth_id_main" value="<%= account[:auth_id] %>"
       onblur="var elems = document.getElementsByName('auth_id'); for (i in elems) { elems[i].value = this.value }">
 </div>
 
 <br/>
 
 <form action="send_message" method="post">
-  <input type="hidden" name="account_id">
-  <input type="hidden" name="auth_id">
+  <input type="hidden" name="account_id" value="<%= account[:account_id] %>">
+  <input type="hidden" name="auth_id" value="<%= account[:auth_id] %>">
   <div class="form-field-50">
     <label for="from_number">From Number</label>
     <input type="text" name="from_number">
@@ -36,7 +36,7 @@
 <br/>
 
 <div>
-  <%= render_erb_partial :"partials/refresh_form"%>
+  <%= render_erb_partial :"partials/refresh_form", locals: {account: account} %>
 
   <table class="table-field">
     <thead>
