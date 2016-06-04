@@ -1,3 +1,4 @@
+require 'json'
 require_relative 'twilio_protocol'
 
 class Messanger
@@ -14,7 +15,7 @@ class Messanger
 
   def list_messages
     response= twilio_tp.get
-    response.body
+    JSON.parse(response.body)["messages"]
   end
 
 private

@@ -16,16 +16,18 @@ describe "controllers" do
       class_double(Messanger)
       messanger_double = instance_double(Messanger)
       expect(Messanger).to receive(:new).with({account_id: "accountid", auth_id: "authid"}).and_return(messanger_double)
-      expect(messanger_double).to receive(:list_messages).and_return({messages: "data"})
+      expect(messanger_double).to receive(:list_messages).and_return({message_list: "data"})
     end
 
     it "should allow access" do
+      expect_any_instance_of(app).to receive(:erb).with(:index, locals: {account: {account_id: "accountid", auth_id: "authid"}, message_list: {message_list: "data"}})
+
       get '/list_messages?account_id=accountid&auth_id=authid'
       expect(last_response).to be_ok
     end
 
     it "should return message list" do
-      expect_any_instance_of(app).to receive(:erb).with(:index, locals: {account: {account_id: "accountid", auth_id: "authid"}, message_list: {messages: "data"}})
+      expect_any_instance_of(app).to receive(:erb).with(:index, locals: {account: {account_id: "accountid", auth_id: "authid"}, message_list: {message_list: "data"}})
 
       get '/list_messages?account_id=accountid&auth_id=authid'
     end

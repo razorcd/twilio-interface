@@ -51,11 +51,11 @@ describe "Messanger" do
 
       expect(TwilioProtocol).to receive(:new).with(account_id: "accountid", auth_id: "authid").and_return(tp_double)
       expect(tp_double).to receive(:get).and_return(get_double)
-      expect(get_double).to receive(:body).and_return({msg1: "message1", msg2: "message2"})
+      expect(get_double).to receive(:body).and_return("{\"messages\":{\"msg1\":\"message1\",\"msg2\":\"message2\"}}")
 
       instance= Messanger.new({account_id: "accountid", auth_id: "authid"})
 
-      expect(instance.list_messages).to eq({msg1: "message1", msg2: "message2"})
+      expect(instance.list_messages).to eq({"msg1" => "message1", "msg2" => "message2"})
     end
   end
 end

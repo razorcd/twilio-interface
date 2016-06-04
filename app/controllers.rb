@@ -16,7 +16,6 @@ post '/send_message' do
 end
 
 get '/list_messages' do
-  headers "Content-Type" => "application/json"
   strong_params= strong_list_messages_params params
   messages_list= messages_list(params: strong_params)
   erb :index, locals: {account: credentials_from(params: strong_params), message_list: messages_list}
