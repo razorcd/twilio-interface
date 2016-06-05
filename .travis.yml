@@ -4,5 +4,3 @@ rvm:
 
 script:
   - "bundle exec rspec"
-  - "bundle exec rake SASS:compile"
-  - "bundle exec rake JS:copy"
