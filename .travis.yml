@@ -3,6 +3,6 @@ rvm:
   - 2.3.1
 
 script:
-  - "rspec"
-  - "rake compile"
-  - "rake copy"
+  - "bundle exec rspec"
+  - "bundle exec rake SASS:compile"
+  - "bundle exec rake JS:copy"
