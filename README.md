@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/razorcd/twilio-interface.svg?branch=master)](https://travis-ci.org/razorcd/twilio-interface)
+
 # twilio-interface
 Interface for messaging with Twilio
 
