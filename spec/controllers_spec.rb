@@ -11,7 +11,7 @@ describe "controllers" do
     end
   end
 
-  context "GET '/list_messages'" do
+  context "POST '/list_messages'" do
     let(:messanger_double) {instance_double(Messanger)}
 
     before :each do
@@ -26,7 +26,7 @@ describe "controllers" do
           with(:index, locals: {account: {account_id: "accountid", auth_id: "authid", from_number: "111", to_number: "222", body: "lorem"}, message_list: "data"}).
           and_return("data")
 
-        get '/list_messages?account_id=accountid&auth_id=authid&from_number=111&to_number=222&body=lorem'
+        post '/list_messages', {account_id: "accountid", auth_id: "authid", from_number: "111", to_number: "222", body: "lorem"}
         expect(last_response.body).to eq("data")
       end
     end
@@ -39,7 +39,7 @@ describe "controllers" do
           with(:index, locals: {account: {account_id: "accountid", auth_id: "authid", from_number: "111", to_number: "222", body: "lorem"}, flash: {error_flash: "ERROR MESSAGE"}}).
           and_return("data")
 
-        get '/list_messages?account_id=accountid&auth_id=authid&from_number=111&to_number=222&body=lorem'
+        post '/list_messages', {account_id: "accountid", auth_id: "authid", from_number: "111", to_number: "222", body: "lorem"}
         expect(last_response.body).to eq("data")
       end
     end

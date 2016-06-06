@@ -12,7 +12,7 @@ RSpec.describe 'partials/refresh_form.erb', type: :view do
   end
 
   it 'should exist' do
-    expect(refresh_form_without_credentials_body).to have_selector('form[action="list_messages"][method="get"]')
+    expect(refresh_form_without_credentials_body).to have_selector('form[action="list_messages"][method="post"]')
   end
 
   it 'should contain credentials input fields' do
