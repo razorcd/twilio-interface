@@ -1,20 +1,16 @@
-<div class="form-field-50">
-  <label for="account_id">Account id</label>
-  <input type="text" name="account_id_main" value="<%= account[:account_id] %>"
-      onblur="var elems = document.getElementsByName('account_id'); for (i in elems) { elems[i].value = this.value }">
-</div>
-
-<div class="form-field-50">
-  <label for="auth_id">Auth id</label>
-  <input type="text" name="auth_id_main" value="<%= account[:auth_id] %>"
-      onblur="var elems = document.getElementsByName('auth_id'); for (i in elems) { elems[i].value = this.value }">
-</div>
 
 <br/>
 
 <form action="send_message" method="post">
-  <input type="hidden" name="account_id" value="<%= account[:account_id] %>">
-  <input type="hidden" name="auth_id" value="<%= account[:auth_id] %>">
+  <div class="form-field-50">
+    <label for="account_id">Account id</label>
+    <input type="text" name="account_id" value="<%= account[:account_id] %>">
+  </div>
+
+  <div class="form-field-50">
+    <label for="auth_id">Auth id</label>
+    <input type="text" name="auth_id" value="<%= account[:auth_id] %>">
+  </div>
   <div class="form-field-50">
     <label for="from_number">From Number</label>
     <input type="text" name="from_number" value="<%= account[:from_number] %>">
@@ -27,7 +23,6 @@
     <label for="body"></label>
     <textarea name="body" placeholder="Type your message ..."><%= account[:body] %></textarea>
   </div>
-
   <div class="form-field-50">
     <input class="button-success" type="submit" value="Send">
   </div>
@@ -42,3 +37,23 @@
     <%= render_erb_partial :"partials/message_list", locals: {message_list: message_list} %>
   <% end %>
 </div>
+
+
+<script>
+  ["account_id", "auth_id", "from_number", "to_number", "body"].map(function(name){
+    var elements= document.getElementsByName(name);
+    for (i in elements) {
+      elements[i].onblur = update_similar_elements;
+      // elements[i].onblur = function(){alert(this.name)}
+    }
+  })
+
+  function update_similar_elements() {
+    console.log(this);
+    var name= this.name;
+    var similarElements = document.getElementsByName(name);
+    for (i in similarElements) {
+      similarElements[i].value = this.value;
+    }
+  }
+</script>
