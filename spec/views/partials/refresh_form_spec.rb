@@ -24,6 +24,6 @@ RSpec.describe 'partials/refresh_form.erb', type: :view do
   end
 
   it 'should contain submit' do
-    expect(refresh_form_without_credentials_body).to have_button("Refresh")
+    expect(refresh_form_without_credentials_body).to have_button("Load message log")
   end
 end
