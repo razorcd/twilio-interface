@@ -90,3 +90,20 @@ footer {
 .hidden {
   display: none;
 }
+
+.clear {
+  clear: both;
+}
+
+.col-6 {
+  width: 100%;
+  padding: 10px;
+  float: left;
+  margin-bottom: 10px;
+}
+
+@media all and (min-width: 1210px) {
+  .col-6{
+    width: 50%;
+  }
+}

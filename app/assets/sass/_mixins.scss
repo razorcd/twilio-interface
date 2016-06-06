@@ -4,6 +4,7 @@
   box-sizing: border-box;
   display: inline-block;
   width: $input-field-width;
+  max-width: 750px;
   height: $height;
   border: 1px solid $grey-border-color;
   border-radius: 4px;
@@ -27,6 +28,7 @@
 @mixin submit-field($height) {
   margin-left: $input-labels-width + 8px;
   width: $input-field-width;
+  max-width: 750px;
   height: $height;
 }
 
