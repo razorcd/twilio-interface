@@ -44,6 +44,13 @@ RSpec.describe 'index.erb', type: :view do
       expect(index_body).to have_selector('textarea[name="body"][value="lorem"]')
     end
 
+    it 'should NOT autocomplete credential input fields' do
+      set_rendered_with locals: {account: {}}
+
+      expect(index_body).to have_selector('input[name="account_id"][autocomplete="off"]')
+      expect(index_body).to have_selector('input[name="auth_id"][autocomplete="off"]')
+    end
+
     it 'should contain submit' do
       set_rendered_with locals: {account: {}}
 

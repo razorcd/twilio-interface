@@ -4,12 +4,12 @@
 <form class="col-5" action="send_message" method="post">
   <div class="form-field-50">
     <label for="account_id">Account id</label>
-    <input type="text" name="account_id" value="<%= account[:account_id] %>">
+    <input type="text" name="account_id" autocomplete="off" value="<%= account[:account_id] %>">
   </div>
 
   <div class="form-field-50">
     <label for="auth_id">Auth id</label>
-    <input type="text" name="auth_id" value="<%= account[:auth_id] %>">
+    <input type="text" name="auth_id" autocomplete="off" value="<%= account[:auth_id] %>">
   </div>
   <div class="form-field-50">
     <label for="from_number">From Number</label>
