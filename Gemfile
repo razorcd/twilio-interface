@@ -5,6 +5,7 @@ ruby '2.3.1'
 gem 'sinatra', '~> 1.4.7'
 gem 'compass', '~> 1.0.3'
 gem 'rake', '~> 11.1.2'
+gem 'thin', '~> 0.7.1'
 
 group :test do
   gem 'rspec', '~> 3.4.0'
