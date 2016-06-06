@@ -5,7 +5,7 @@ get '/' do
   erb :index, locals: {account: {}}
 end
 
-get '/list_messages' do
+post '/list_messages' do
   strong_params= strong_params_for params
   messanger= Messanger.new(credentials_from(strong_params))
   message_list= messanger.list_messages
