@@ -1,7 +1,7 @@
 
 <br/>
 
-<form class="col-6" action="send_message" method="post">
+<form class="col-5" action="send_message" method="post">
   <div class="form-field-50">
     <label for="account_id">Account id</label>
     <input type="text" name="account_id" value="<%= account[:account_id] %>">
@@ -29,9 +29,9 @@
 </form>
 
 
-<div class="col-6">
+<div class="col-7">
   <%= render_erb_partial :"partials/refresh_form", locals: {account: account} %>
-
+  <br/>
   <% if defined?(message_list) %>
     <%= render_erb_partial :"partials/message_list", locals: {message_list: message_list} %>
   <% end %>

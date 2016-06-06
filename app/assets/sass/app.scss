@@ -3,7 +3,7 @@
 
 html {
   box-sizing: border-box;
-  font-size: 1.4em;
+  font-size: 1.3em;
   font-family: Verdana, Geneva, sans-serif;
 }
 
@@ -66,8 +66,9 @@ main {
 }
 
 footer {
+  height: 100px;
   margin-top: 25px;
-  padding: 5px;
+  padding: 15px;
   background-color: #EBEBEB;
   text-align: center;
   font-size: 0.6em;
@@ -75,12 +76,15 @@ footer {
 }
 
 .flash {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: calc(100% - 10px);
   height: 50px;
   color: #ffffff;
   border-radius: 4px;
   margin: 5px;
-  padding: 15px 30px;
+  padding: 14px 30px;
   font-size: 0.75em;
 
   &.success_flash { background-color: #7AD755; }
@@ -95,7 +99,7 @@ footer {
   clear: both;
 }
 
-.col-6 {
+.col-3, .col-4, .col-5, .col-6, .col-7, .col-8 {
   width: 100%;
   padding: 10px;
   float: left;
@@ -103,7 +107,22 @@ footer {
 }
 
 @media all and (min-width: 1210px) {
-  .col-6{
+  .col-3 {
+    width: 25%;
+  }
+  .col-4 {
+    width: 33%;
+  }
+  .col-5 {
+    width: 41%;
+  }
+  .col-6 {
     width: 50%;
+  }
+  .col-7 {
+    width: 59%;
+  }
+  .col-8 {
+    width: 66%;
   }
 }
