@@ -7,7 +7,6 @@ files.each {|f| require_relative "./twilio_protocol/#{f}"}
 
 class TwilioProtocol
   def initialize account_id:, auth_id:
-    raise "Invalid TwilioProtocol params" if account_id.to_s.empty? || auth_id.to_s.empty?
     @account_id= account_id
     @auth_id= auth_id
   end

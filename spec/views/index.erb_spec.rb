@@ -16,20 +16,6 @@ RSpec.describe 'index.erb', type: :view do
     expect(index_body).to have_text('Twilio Messaging Interface')
   end
 
-  it 'should contain account_id and auth_id input fields' do
-    set_rendered_with locals: {account: {}}
-
-    expect(index_body).to have_selector('input[type="text"][name="account_id_main"]')
-    expect(index_body).to have_selector('input[type="text"][name="auth_id_main"]')
-  end
-
-  it 'should contain account_id and auth_id input fields with specified values' do
-    set_rendered_with locals: {account: {account_id: "account_id", auth_id: "auth_id"}}
-
-    expect(index_body).to have_selector('input[type="text"][name="account_id_main"][value="account_id"]')
-    expect(index_body).to have_selector('input[type="text"][name="auth_id_main"][value="auth_id"]')
-  end
-
   context 'send message form' do
     it 'should exist' do
       set_rendered_with locals: {account: {}}
@@ -37,21 +23,25 @@ RSpec.describe 'index.erb', type: :view do
       expect(index_body).to have_selector('form[action="send_message"][method="post"]')
     end
 
-    it 'should contain all input fields' do
+
+    it 'should contain all empty input fields' do
       set_rendered_with locals: {account: {}}
 
-      expect(index_body).to have_selector('input[name="account_id"]', visible: false)
-      expect(index_body).to have_selector('input[name="auth_id"]', visible: false)
-      expect(index_body).to have_selector('input[type="text"][name="from_number"]')
-      expect(index_body).to have_selector('input[type="text"][name="to_number"]')
-      expect(index_body).to have_selector('textarea[name="body"]')
+      expect(index_body).to have_selector('input[name="account_id"][value=""]')
+      expect(index_body).to have_selector('input[name="auth_id"][value=""]')
+      expect(index_body).to have_selector('input[type="text"][name="from_number"][value=""]')
+      expect(index_body).to have_selector('input[type="text"][name="to_number"][value=""]')
+      expect(index_body).to have_selector('textarea[name="body"][value=""]')
     end
 
-    it 'should contain all input fields' do
-      set_rendered_with locals: {account: {account_id: "account_id", auth_id: "auth_id"}}
+    it 'should contain all filled input fields' do
+      set_rendered_with locals: {account: {account_id: "accountid", auth_id: "authid", from_number: "111", to_number: "222", body: "lorem"}}
 
-      expect(index_body).to have_selector('input[name="account_id"][value="account_id"]', visible: false)
-      expect(index_body).to have_selector('input[name="auth_id"][value="auth_id"]', visible: false)
+      expect(index_body).to have_selector('input[name="account_id"][value="accountid"]')
+      expect(index_body).to have_selector('input[name="auth_id"][value="authid"]')
+      expect(index_body).to have_selector('input[type="text"][name="from_number"][value="111"]')
+      expect(index_body).to have_selector('input[type="text"][name="to_number"][value="222"]')
+      expect(index_body).to have_selector('textarea[name="body"][value="lorem"]')
     end
 
     it 'should contain submit' do
