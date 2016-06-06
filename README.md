@@ -8,7 +8,7 @@ Web interface for sending and receiving messages with Twilio.
 
 #Development
 
-- to start local server run `rackup` and visit `localhost:9292`
+- to start local server run `bundle exec thin start -r config.ru -p 9292` and visit `localhost:9292`
 - to run tests run `rspec`
 - to deploy to Heroku merge `development` branch to `production` branch in GitHub and CI will do the rest
 
