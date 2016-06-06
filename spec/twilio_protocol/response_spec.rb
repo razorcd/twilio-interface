@@ -53,7 +53,7 @@ describe "Response" do
     end
 
     it "should return response messages as hashes" do
-      expect(TwilioProtocol::Response.new(good_response_body).messages).to eq([
+      expect(Response.new(good_response_body).messages).to eq([
           {
             "sid" => "SMb4213f8751e04b819b11cf2a80972287",
             "date_created" => "Mon, 23 May 2016 10:21:45 +0000",

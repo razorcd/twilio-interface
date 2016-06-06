@@ -12,50 +12,71 @@ describe "controllers" do
   end
 
   context "GET '/list_messages'" do
+    let(:messanger_double) {instance_double(Messanger)}
+
     before :each do
       class_double(Messanger)
-      messanger_double = instance_double(Messanger)
       expect(Messanger).to receive(:new).with({account_id: "accountid", auth_id: "authid"}).and_return(messanger_double)
-      expect(messanger_double).to receive(:list_messages).and_return({message_list: "data"})
     end
 
-    it "should allow access" do
-      expect_any_instance_of(app).to receive(:erb).with(:index, locals: {account: {account_id: "accountid", auth_id: "authid"}, message_list: {message_list: "data"}})
+    context "with valid params" do
+      it "should return message list" do
+        expect(messanger_double).to receive(:list_messages).and_return("data")
+        expect_any_instance_of(app).to receive(:erb).
+          with(:index, locals: {account: {account_id: "accountid", auth_id: "authid"}, message_list: "data"}).
+          and_return("data")
 
-      get '/list_messages?account_id=accountid&auth_id=authid'
-      expect(last_response).to be_ok
+        get '/list_messages?account_id=accountid&auth_id=authid'
+        expect(last_response.body).to eq("data")
+      end
     end
 
-    it "should return message list" do
-      expect_any_instance_of(app).to receive(:erb).with(:index, locals: {account: {account_id: "accountid", auth_id: "authid"}, message_list: {message_list: "data"}})
+    context "with invalid params" do
+      it "should NOT return message list" do
+        expect(messanger_double).to receive(:list_messages).and_return(nil)
+        expect(messanger_double).to receive(:error_message).and_return("ERROR MESSAGE")
+        expect_any_instance_of(app).to receive(:erb).
+          with(:index, locals: {account: {account_id: "accountid", auth_id: "authid"}, flash: {error_flash: "ERROR MESSAGE"}}).
+          and_return("data")
 
-      get '/list_messages?account_id=accountid&auth_id=authid'
+        get '/list_messages?account_id=accountid&auth_id=authid'
+        expect(last_response.body).to eq("data")
+      end
     end
   end
 
   context "POST '/send_message'" do
     let(:messanger_double) { instance_double(Messanger) }
+
     before :each do
       class_double(Messanger)
       expect(Messanger).to receive(:new).with({account_id: "accountid", auth_id: "authid"}).and_return(messanger_double)
     end
 
-    it "should return success when post message is successful" do
-      success_erb_params= [:index, locals: {account: {account_id: "accountid", auth_id: "authid"}, flash: {success_flash: "SUCCESS FLASH"}}]
-      expect_any_instance_of(app).to receive(:erb).with(*success_erb_params)
-      expect(messanger_double).to receive(:send_message).with({from_number: "111", to_number: "222", body: "lorem"}).
-          and_return(true)
+    context "with valid params" do
+      it "should post message" do
+        expect(messanger_double).to receive(:send_message).with({from_number: "111", to_number: "222", body: "lorem"}).
+            and_return(true)
+        expect_any_instance_of(app).to receive(:erb).
+          with(:index, locals: {account: {account_id: "accountid", auth_id: "authid"}, flash: {success_flash: "SUCCESS FLASH"}}).
+          and_return("data")
 
-      post '/send_message', {account_id: "accountid", auth_id: "authid", from_number: "111", to_number: "222", body: "lorem"}
+        post '/send_message', {account_id: "accountid", auth_id: "authid", from_number: "111", to_number: "222", body: "lorem"}
+        expect(last_response.body).to eq("data")
+      end
     end
 
-    it "should return failure when post message is NOT successful" do
-      success_erb_params= [:index, locals: {account: {account_id: "accountid", auth_id: "authid"}, flash: {error_flash: "ERROR FLASH"}}]
-      expect_any_instance_of(app).to receive(:erb).with(*success_erb_params)
-      expect(messanger_double).to receive(:send_message).with({from_number: "", to_number: "", body: "lorem"}).
-          and_return(false)
+    context "with invalid params" do
+      it "should NOT post message" do
+        expect(messanger_double).to receive(:send_message).with({from_number: "111", to_number: "222", body: "lorem"}).
+            and_return(false)
+        expect_any_instance_of(app).to receive(:erb).
+          with(:index, locals: {account: {account_id: "accountid", auth_id: "authid"}, flash: {error_flash: "ERROR FLASH"}}).
+          and_return("data")
 
-      post '/send_message', {account_id: "accountid", auth_id: "authid", from_number: "", to_number: "", body: "lorem"}
+        post '/send_message', {account_id: "accountid", auth_id: "authid", from_number: "111", to_number: "222", body: "lorem"}
+        expect(last_response.body).to eq("data")
+      end
     end
   end
 end

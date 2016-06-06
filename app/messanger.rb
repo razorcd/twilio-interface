@@ -14,6 +14,7 @@ class Messanger
   def send_message from_number:, to_number:, body:
     response= twilio_protocol.post(from_number: from_number, to_number: to_number, body: body)
     if response.successful?
+      @error_message= nil
       true
     else
       @error_message= response.error_message
@@ -24,6 +25,7 @@ class Messanger
   def list_messages
     response= twilio_protocol.get
     if response.successful?
+      @error_message= nil
       response.messages
     else
       @error_message= response.error_message
@@ -36,5 +38,4 @@ private
   def twilio_protocol
     @twilio_protocol||= TwilioProtocol.new(account_id: @account_id, auth_id: @auth_id)
   end
-
 end
