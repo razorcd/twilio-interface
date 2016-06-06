@@ -1,7 +1,5 @@
-require './app/twilio_protocol/response'
-
-describe "TwilioProtocol::Response" do
-  let(:good_response) do
+describe "Response" do
+  let(:good_response_body) do
     '{
       "first_page_uri": "/2010-04-01/Accounts/AC7a9155ea350b00a7ff3c8d99d62ac0c5/Messages.json?PageSize=50&Page=0",
       "end": 49,
@@ -40,22 +38,22 @@ describe "TwilioProtocol::Response" do
     }'
   end
 
-  let(:bad_response) do
+  let(:bad_response_body) do
     '{"code": 20404, "message": "The requested resource /2010-04-01/Accounts/a/Messages.json was not found", "more_info": "https://www.twilio.com/docs/errors/20404", "status": 404}'
   end
 
 
   it "should be defined" do
-    expect(defined? TwilioProtocol::Response.!.!).to be_truthy
+    expect(defined?(Response).!.!).to be_truthy
   end
 
   context "successful response" do
     it "should return successful" do
-      expect(TwilioProtocol::Response.new(good_response).successful?).to eq(true)
+      expect(Response.new(good_response_body).successful?).to eq(true)
     end
 
     it "should return response messages as hashes" do
-      expect(TwilioProtocol::Response.new(good_response).messages).to eq([
+      expect(TwilioProtocol::Response.new(good_response_body).messages).to eq([
           {
             "sid" => "SMb4213f8751e04b819b11cf2a80972287",
             "date_created" => "Mon, 23 May 2016 10:21:45 +0000",
@@ -84,21 +82,21 @@ describe "TwilioProtocol::Response" do
     end
 
     it "should NOT return error message" do
-      expect(TwilioProtocol::Response.new(good_response).error_message).to eq(nil)
+      expect(Response.new(good_response_body).error_message).to eq(nil)
     end
   end
 
   context "UNsuccessful response" do
     it "should return unsuccessful" do
-      expect(TwilioProtocol::Response.new(bad_response).successful?).to eq(false)
+      expect(Response.new(bad_response_body).successful?).to eq(false)
     end
 
     it "should NOT return response messages" do
-      expect(TwilioProtocol::Response.new(bad_response).messages).to eq(nil)
+      expect(Response.new(bad_response_body).messages).to eq(nil)
     end
 
     it "should return error message" do
-      expect(TwilioProtocol::Response.new(bad_response).error_message).to eq("The requested resource /2010-04-01/Accounts/a/Messages.json was not found")
+      expect(Response.new(bad_response_body).error_message).to eq("The requested resource /2010-04-01/Accounts/a/Messages.json was not found")
     end
   end
 end
