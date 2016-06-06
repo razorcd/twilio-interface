@@ -17,7 +17,7 @@ class TwilioProtocol
     request.basic_auth(@account_id, @auth_id)
 
     response= server.request(request)
-    Response.new response.body
+    Response.new response.body, response.code
   end
 
     # `
@@ -37,7 +37,7 @@ class TwilioProtocol
     })
 
     response = server.request(request)
-    Response.new response.body
+    Response.new response.body, response.code
   end
 
 private

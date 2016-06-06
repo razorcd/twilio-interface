@@ -20,9 +20,9 @@ post '/send_message' do
   strong_params= strong_send_message_params params
 
   if message_sent?(params: strong_params)
-    erb :index, locals: {account: credentials_from(strong_params), flash: {success_flash: "SUCCESS FLASH"}}
+    erb :index, locals: {account: strong_params, flash: {success_flash: "SUCCESS FLASH"}}
   else
-    erb :index, locals: {account: credentials_from(strong_params), flash: {error_flash: "ERROR FLASH"}}
+    erb :index, locals: {account: strong_params, flash: {error_flash: "ERROR FLASH"}}
   end
 end
 

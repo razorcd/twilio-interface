@@ -58,7 +58,7 @@ describe "controllers" do
         expect(messanger_double).to receive(:send_message).with({from_number: "111", to_number: "222", body: "lorem"}).
             and_return(true)
         expect_any_instance_of(app).to receive(:erb).
-          with(:index, locals: {account: {account_id: "accountid", auth_id: "authid"}, flash: {success_flash: "SUCCESS FLASH"}}).
+          with(:index, locals: {account: {account_id: "accountid", auth_id: "authid", from_number: "111", to_number: "222", body: "lorem"}, flash: {success_flash: "SUCCESS FLASH"}}).
           and_return("data")
 
         post '/send_message', {account_id: "accountid", auth_id: "authid", from_number: "111", to_number: "222", body: "lorem"}
@@ -71,7 +71,7 @@ describe "controllers" do
         expect(messanger_double).to receive(:send_message).with({from_number: "111", to_number: "222", body: "lorem"}).
             and_return(false)
         expect_any_instance_of(app).to receive(:erb).
-          with(:index, locals: {account: {account_id: "accountid", auth_id: "authid"}, flash: {error_flash: "ERROR FLASH"}}).
+          with(:index, locals: {account: {account_id: "accountid", auth_id: "authid", from_number: "111", to_number: "222", body: "lorem"}, flash: {error_flash: "ERROR FLASH"}}).
           and_return("data")
 
         post '/send_message', {account_id: "accountid", auth_id: "authid", from_number: "111", to_number: "222", body: "lorem"}
