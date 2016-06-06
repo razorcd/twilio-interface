@@ -1,3 +1,3 @@
 module Version
-  VERSION = "0.2 (alpha)"
+  VERSION = "0.3 (alpha)"
 end
