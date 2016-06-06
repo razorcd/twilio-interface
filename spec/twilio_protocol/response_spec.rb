@@ -49,11 +49,11 @@ describe "Response" do
 
   context "successful response" do
     it "should return successful" do
-      expect(Response.new(good_response_body).successful?).to eq(true)
+      expect(Response.new(good_response_body, 200).successful?).to eq(true)
     end
 
     it "should return response messages as hashes" do
-      expect(Response.new(good_response_body).messages).to eq([
+      expect(Response.new(good_response_body, 201).messages).to eq([
           {
             "sid" => "SMb4213f8751e04b819b11cf2a80972287",
             "date_created" => "Mon, 23 May 2016 10:21:45 +0000",
@@ -82,21 +82,21 @@ describe "Response" do
     end
 
     it "should NOT return error message" do
-      expect(Response.new(good_response_body).error_message).to eq(nil)
+      expect(Response.new(good_response_body, 200).error_message).to eq(nil)
     end
   end
 
   context "UNsuccessful response" do
     it "should return unsuccessful" do
-      expect(Response.new(bad_response_body).successful?).to eq(false)
+      expect(Response.new(bad_response_body, 404).successful?).to eq(false)
     end
 
     it "should NOT return response messages" do
-      expect(Response.new(bad_response_body).messages).to eq(nil)
+      expect(Response.new(bad_response_body, 500).messages).to eq(nil)
     end
 
     it "should return error message" do
-      expect(Response.new(bad_response_body).error_message).to eq("The requested resource /2010-04-01/Accounts/a/Messages.json was not found")
+      expect(Response.new(bad_response_body, 400).error_message).to eq("The requested resource /2010-04-01/Accounts/a/Messages.json was not found")
     end
   end
 end

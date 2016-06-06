@@ -1,30 +1,27 @@
 require 'json'
 
 class Response
-  attr_reader :response_body
-
-  def initialize response_body
-    @response_body= response_body
+  def initialize body, status
+    @body= body
+    @status= status
   end
 
   def successful?
-    status= json_response_body["status"]
-    return false if status && status.to_s[0] != 2
-    true
+    @status.to_s[0]=="2"
   end
 
   def messages
-    json_response_body["messages"]
+    json_body["messages"]
   end
 
   def error_message
-    json_response_body["message"]
+    json_body["message"]
   end
 
 private
 
-  def json_response_body
-    JSON.parse(response_body)
+  def json_body
+    JSON.parse(@body)
   end
 
 end
