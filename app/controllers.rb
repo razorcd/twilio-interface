@@ -20,6 +20,7 @@ post '/send_message' do
   strong_params= strong_send_message_params params
 
   if message_sent?(params: strong_params)
+    strong_params[:body]= ""
     erb :index, locals: {account: strong_params, flash: {success_flash: "SUCCESS FLASH"}}
   else
     erb :index, locals: {account: strong_params, flash: {error_flash: "ERROR FLASH"}}

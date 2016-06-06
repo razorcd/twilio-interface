@@ -17,15 +17,15 @@
   <input type="hidden" name="auth_id" value="<%= account[:auth_id] %>">
   <div class="form-field-50">
     <label for="from_number">From Number</label>
-    <input type="text" name="from_number">
+    <input type="text" name="from_number" value="<%= account[:from_number] %>">
   </div>
   <div class="form-field-50">
     <label for="to_number">To Number</label>
-    <input type="text" name="to_number">
+    <input type="text" name="to_number" value="<%= account[:to_number] %>">
   </div>
   <div class="form-field-200">
     <label for="body"></label>
-    <textarea name="body" placeholder="Type your message ..."></textarea>
+    <textarea name="body" placeholder="Type your message ..."><%= account[:body] %></textarea>
   </div>
 
   <div class="form-field-50">
