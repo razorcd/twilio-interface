@@ -1,5 +1,8 @@
 <form action="list_messages" method="get">
   <input type="hidden" name="account_id" value="<%= account[:account_id] %>">
   <input type="hidden" name="auth_id" value="<%= account[:auth_id] %>">
+  <input type="hidden" name="from_number" value="<%= account[:from_number] %>">
+  <input type="hidden" name="to_number" value="<%= account[:to_number] %>">
+  <textarea class="hidden" name="body" placeholder="Type your message ..." value="<%= account[:body] %>"><%= account[:body] %></textarea>
   <input class="button-default" type="submit" value="Refresh">
 </form>

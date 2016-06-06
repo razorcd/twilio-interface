@@ -5,31 +5,43 @@ get '/' do
   erb :index, locals: {account: {}}
 end
 
-post '/send_message' do
-  strong_params= strong_send_message_params params
-
-  if message_sent?(params: strong_params)
-    erb :index, locals: {account: credentials_from(params: strong_params), flash: {success_flash: "SUCCESS FLASH"}}
+get '/list_messages' do
+  strong_params= strong_params_for params
+  messanger= Messanger.new(credentials_from(strong_params))
+  message_list= messanger.list_messages
+  if message_list
+    erb :index, locals: {account: strong_params, message_list: message_list}
   else
-    erb :index, locals: {account: credentials_from(params: strong_params), flash: {error_flash: "ERROR FLASH"}}
+    erb :index, locals: {account: strong_params, flash: {error_flash: messanger.error_message}}
   end
 end
 
-get '/list_messages' do
-  strong_params= strong_list_messages_params params
-  messages_list= messages_list(params: strong_params)
-  erb :index, locals: {account: credentials_from(params: strong_params), message_list: messages_list}
+post '/send_message' do
+  strong_params= strong_params_for params
+
+  if message_sent?(params: strong_params)
+    strong_params[:body]= ""
+    erb :index, locals: {account: strong_params, flash: {success_flash: "Message was sent successfully."}}
+  else
+    erb :index, locals: {account: strong_params, flash: {error_flash: "Message sending failed."}}
+  end
 end
 
 def message_sent? params:
-  Messanger.new(account_id: params[:account_id], auth_id: params[:auth_id]).
+  Messanger.new(credentials_from(params)).
       send_message(from_number: params[:from_number], to_number: params[:to_number], body: params[:body])
 end
 
-def messages_list params:
-  Messanger.new(account_id: params[:account_id], auth_id: params[:auth_id]).list_messages
+def credentials_from params
+  {account_id: params[:account_id], auth_id: params[:auth_id]}
 end
 
-def credentials_from params:
-  {account_id: params[:account_id], auth_id: params[:auth_id]}
+def strong_params_for params
+  {
+    account_id: params["account_id"],
+    auth_id: params["auth_id"],
+    from_number: params["from_number"],
+    to_number: params["to_number"],
+    body: params["body"],
+  }
 end
