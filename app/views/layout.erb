@@ -10,14 +10,17 @@
     <%= render_erb_partial(:"partials/flash", locals: {flash: flash}) if defined?(flash)%>
 
     <header>
-      <h1>Twilio Messaging Interface</h1>
+      <h1 class="text text-center">Twilio Messaging Interface</h1>
     </header>
 
     <main>
       <%= yield %>
+      <div class="clear"></div>
+      <p class="text text-smaller text-center">None of the data is stored, cached or logged on our servers.</p>
     </main>
 
-    <footer class="clear">Twilio Messaging Interface - v<%= Version::VERSION %></footer>
-
+    <footer class="clear">
+      <span>Twilio Messaging Interface - v<%= Version::VERSION %></span>
+    </footer>
   </body>
 </html>

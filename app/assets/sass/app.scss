@@ -5,6 +5,7 @@ html {
   box-sizing: border-box;
   font-size: 1.3em;
   font-family: Verdana, Geneva, sans-serif;
+  background-color: #EBEBEB;
 }
 
 *, *:before, *:after {
@@ -13,12 +14,12 @@ html {
 
 body {
   margin: 0;
+  background-color: #ffffff;
 }
 
 header {
   width: 100%;
-  text-align: center;
-  margin: 50px 0;
+  padding-top: 30px;
 }
 
 .button-success {
@@ -97,6 +98,16 @@ footer {
 
 .clear {
   clear: both;
+}
+
+.text {
+  &.text-smaller {
+    font-size: 0.75em;
+  }
+
+  &.text-center {
+    text-align: center
+  }
 }
 
 .col-3, .col-4, .col-5, .col-6, .col-7, .col-8 {
