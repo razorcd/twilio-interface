@@ -16,6 +16,9 @@ namespace :JS do
 end
 
 desc "starts web server"
-task :start do
-  exec "thin start -r config.ru -p 9292"
+task :start, [:port] do |t, args|
+  port= args[:port] || 9292
+  exec "bundle exec thin start -r config.ru -p #{port}"
 end
+
+
