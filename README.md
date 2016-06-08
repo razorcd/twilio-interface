@@ -22,9 +22,10 @@ The license is MIT, so feel free to fork this repo and use/change it at will.
 #TODO
 - [x] extract list_messsages in a partial
 - [x] style flash messages
-- [ ] separate send_message form and list_messages in 2 views
 - [x] deploy to Heroku and add CI (with Travis?)
 - [ ] add test coverage (coveralls?)
-- [ ] add security
 - [x] state that no data is persisted (db/cache/logs)
+- ~~[ ] separate send_message form and list_messages in 2 views~~
+- [ ] add test coverage (coveralls?)
+- [ ] add security (csrf, xss, )
 - [ ] maybe store data in browsers local storage? (except credentials)
