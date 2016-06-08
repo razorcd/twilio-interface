@@ -1,4 +1,28 @@
 describe "controllers" do
+  let(:steal_logger) do
+    # will catch any logging of credentials:
+    # logger.debug params.to_s
+    # logger.info params.to_s
+    # logger.warn params.to_s
+    # logger.fatal params.to_s
+    # logger.add 1, params.to_s
+
+    class << app.logger
+      def add(severity, message = nil, progname = nil)
+        @log="" if (defined?(@log).!)
+        @log+= message.to_s
+        @log+= progname.to_s
+      end
+
+      def log
+        @log.to_s
+      end
+    end
+    allow_any_instance_of(app).to receive(:logger).and_return app.logger
+    app.logger
+  end
+
+
   context "GET '/'" do
     it "should allow access" do
       get '/'
@@ -16,19 +40,32 @@ describe "controllers" do
 
     before :each do
       class_double(Messanger)
-      expect(Messanger).to receive(:new).with({account_id: "accountid", auth_id: "authid"}).and_return(messanger_double)
+      expect(Messanger).to receive(:new).with({account_id: "secret_accountid_12345", auth_id: "secret_authid_12345"}).and_return(messanger_double)
     end
 
     context "with valid params" do
-      it "should return message list" do
+      before :each do
         expect(messanger_double).to receive(:list_messages).and_return("data")
         expect_any_instance_of(app).to receive(:erb).
-          with(:index, locals: {account: {account_id: "accountid", auth_id: "authid", from_number: "111", to_number: "222", body: "lorem"}, message_list: "data"}).
+          with(:index, locals: {account: {account_id: "secret_accountid_12345", auth_id: "secret_authid_12345", from_number: "111", to_number: "222", body: "lorem"}, message_list: "data"}).
           and_return("data")
-
-        post '/list_messages', {account_id: "accountid", auth_id: "authid", from_number: "111", to_number: "222", body: "lorem"}
+      end
+      it "should return message list" do
+        post '/list_messages', {account_id: "secret_accountid_12345", auth_id: "secret_authid_12345", from_number: "111", to_number: "222", body: "lorem"}
         expect(last_response.body).to eq("data")
       end
+
+      it "should not display credentials in logs" do
+        steal_logger
+
+        post '/list_messages', {account_id: "secret_accountid_12345", auth_id: "secret_authid_12345", from_number: "111", to_number: "222", body: "lorem"}
+
+        expect(app.logger.log).not_to include "secret_accountid_12345"
+        expect(app.logger.log).not_to include "secret_authid_12345"
+      end
+
+
+
     end
 
     context "with invalid params" do
@@ -36,10 +73,10 @@ describe "controllers" do
         expect(messanger_double).to receive(:list_messages).and_return(nil)
         expect(messanger_double).to receive(:error_message).and_return("ERROR MESSAGE")
         expect_any_instance_of(app).to receive(:erb).
-          with(:index, locals: {account: {account_id: "accountid", auth_id: "authid", from_number: "111", to_number: "222", body: "lorem"}, flash: {error_flash: "ERROR MESSAGE"}}).
+          with(:index, locals: {account: {account_id: "secret_accountid_12345", auth_id: "secret_authid_12345", from_number: "111", to_number: "222", body: "lorem"}, flash: {error_flash: "ERROR MESSAGE"}}).
           and_return("data")
 
-        post '/list_messages', {account_id: "accountid", auth_id: "authid", from_number: "111", to_number: "222", body: "lorem"}
+        post '/list_messages', {account_id: "secret_accountid_12345", auth_id: "secret_authid_12345", from_number: "111", to_number: "222", body: "lorem"}
         expect(last_response.body).to eq("data")
       end
     end
@@ -68,27 +105,12 @@ describe "controllers" do
       end
 
       it "should not display credentials in logs" do
-        # will catch any logging of credentials:
-        # logger.debug params.to_s
-        # logger.info params.to_s
-        # logger.warn params.to_s
-        # logger.fatal params.to_s
-        # logger.add 1, params.to_s
-
-        class << app.logger
-          attr_reader :local_log
-          def add(severity, message = nil, progname = nil)
-            @local_log="" if (defined?(@local_log).!)
-            @local_log+= message.to_s
-            @local_log+= progname.to_s
-          end
-        end
-        allow_any_instance_of(app).to receive(:logger).and_return app.logger
+        steal_logger
 
         post('/send_message', {account_id: "secret_accountid_12345", auth_id: "secret_authid_12345", from_number: "111", to_number: "222", body: "lorem"})
 
-        expect(app.logger.local_log.to_s).not_to include "secret_accountid_12345"
-        expect(app.logger.local_log.to_s).not_to include "secret_authid_12345"
+        expect(app.logger.log).not_to include "secret_accountid_12345"
+        expect(app.logger.log).not_to include "secret_authid_12345"
       end
     end
 
