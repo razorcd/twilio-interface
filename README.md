@@ -12,6 +12,13 @@ Web interface for sending and receiving messages with Twilio.
 - to run tests run `rspec`
 - to deploy to Heroku merge `development` branch to `production` branch in GitHub and CI will do the rest
 
+#Contribution
+This repository serves as a codebase demo. Therefor I am not merging any pull requests from other users.
+
+Any requests for implementing new features are welcome. Just open an issue and I will consider it.
+
+The license is MIT, so feel free to fork this repo and use/change it at will.
+
 #TODO
 - [x] extract list_messsages in a partial
 - [x] style flash messages
