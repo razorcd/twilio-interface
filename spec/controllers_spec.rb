@@ -1,28 +1,4 @@
 describe "controllers" do
-  let(:steal_logger) do
-    # will catch any logging of credentials:
-    # logger.debug params.to_s
-    # logger.info params.to_s
-    # logger.warn params.to_s
-    # logger.fatal params.to_s
-    # logger.add 1, params.to_s
-
-    class << app.logger
-      def add(severity, message = nil, progname = nil)
-        @log="" if (defined?(@log).!)
-        @log+= message.to_s
-        @log+= progname.to_s
-      end
-
-      def log
-        @log.to_s
-      end
-    end
-    allow_any_instance_of(app).to receive(:logger).and_return app.logger
-    app.logger
-  end
-
-
   context "GET '/'" do
     it "should allow access" do
       get '/'
