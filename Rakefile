@@ -14,3 +14,9 @@ namespace :JS do
     `cp -r #{source_js} #{dest_js}`
   end
 end
+
+desc "starts web server"
+task :start do
+  port= $PORT || 9292
+  exec "thin start -r config.ru -p #{port}"
+end
