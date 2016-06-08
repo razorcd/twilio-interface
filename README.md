@@ -18,3 +18,6 @@ Web interface for sending and receiving messages with Twilio.
 - [ ] separate send_message form and list_messages in 2 views
 - [X] deploy to Heroku and add CI (with Travis?)
 - [ ] add test coverage (coveralls?)
+- [ ] add security
+- [ ] state that no data is persisted (db/cache/logs)
+- [ ] maybe store data in browsers local storage? (except credentials)
