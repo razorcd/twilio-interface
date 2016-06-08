@@ -17,6 +17,5 @@ end
 
 desc "starts web server"
 task :start do
-  port= ENV['$PORT'] || 9292
-  exec "thin start -r config.ru -p #{port}"
+  exec "thin start -r config.ru -p 9292"
 end
