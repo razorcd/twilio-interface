@@ -8,9 +8,16 @@ Web interface for sending and receiving messages with Twilio.
 
 #Development
 
-- to start local server run `bundle exec thin start -r config.ru -p 9292` and visit `localhost:9292`
+- to start local server run `rake start` and visit `localhost:9292`
 - to run tests run `rspec`
 - to deploy to Heroku merge `development` branch to `production` branch in GitHub and CI will do the rest
+
+#Contribution
+This repository serves as a codebase demo. Therefor I am not merging any pull requests from other users.
+
+Any requests for implementing new features are welcome. Just open an issue and I will consider it.
+
+The license is MIT, so feel free to fork this repo and use/change it at will.
 
 #TODO
 - [x] extract list_messsages in a partial
@@ -18,3 +25,6 @@ Web interface for sending and receiving messages with Twilio.
 - [ ] separate send_message form and list_messages in 2 views
 - [X] deploy to Heroku and add CI (with Travis?)
 - [ ] add test coverage (coveralls?)
+- [ ] add security
+- [ ] state that no data is persisted (db/cache/logs)
+- [ ] maybe store data in browsers local storage? (except credentials)

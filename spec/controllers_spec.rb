@@ -16,19 +16,32 @@ describe "controllers" do
 
     before :each do
       class_double(Messanger)
-      expect(Messanger).to receive(:new).with({account_id: "accountid", auth_id: "authid"}).and_return(messanger_double)
+      expect(Messanger).to receive(:new).with({account_id: "secret_accountid_12345", auth_id: "secret_authid_12345"}).and_return(messanger_double)
     end
 
     context "with valid params" do
-      it "should return message list" do
+      before :each do
         expect(messanger_double).to receive(:list_messages).and_return("data")
         expect_any_instance_of(app).to receive(:erb).
-          with(:index, locals: {account: {account_id: "accountid", auth_id: "authid", from_number: "111", to_number: "222", body: "lorem"}, message_list: "data"}).
+          with(:index, locals: {account: {account_id: "secret_accountid_12345", auth_id: "secret_authid_12345", from_number: "111", to_number: "222", body: "lorem"}, message_list: "data"}).
           and_return("data")
-
-        post '/list_messages', {account_id: "accountid", auth_id: "authid", from_number: "111", to_number: "222", body: "lorem"}
+      end
+      it "should return message list" do
+        post '/list_messages', {account_id: "secret_accountid_12345", auth_id: "secret_authid_12345", from_number: "111", to_number: "222", body: "lorem"}
         expect(last_response.body).to eq("data")
       end
+
+      it "should not display credentials in logs" do
+        steal_logger
+
+        post '/list_messages', {account_id: "secret_accountid_12345", auth_id: "secret_authid_12345", from_number: "111", to_number: "222", body: "lorem"}
+
+        expect(app.logger.log).not_to include "secret_accountid_12345"
+        expect(app.logger.log).not_to include "secret_authid_12345"
+      end
+
+
+
     end
 
     context "with invalid params" do
@@ -36,10 +49,10 @@ describe "controllers" do
         expect(messanger_double).to receive(:list_messages).and_return(nil)
         expect(messanger_double).to receive(:error_message).and_return("ERROR MESSAGE")
         expect_any_instance_of(app).to receive(:erb).
-          with(:index, locals: {account: {account_id: "accountid", auth_id: "authid", from_number: "111", to_number: "222", body: "lorem"}, flash: {error_flash: "ERROR MESSAGE"}}).
+          with(:index, locals: {account: {account_id: "secret_accountid_12345", auth_id: "secret_authid_12345", from_number: "111", to_number: "222", body: "lorem"}, flash: {error_flash: "ERROR MESSAGE"}}).
           and_return("data")
 
-        post '/list_messages', {account_id: "accountid", auth_id: "authid", from_number: "111", to_number: "222", body: "lorem"}
+        post '/list_messages', {account_id: "secret_accountid_12345", auth_id: "secret_authid_12345", from_number: "111", to_number: "222", body: "lorem"}
         expect(last_response.body).to eq("data")
       end
     end
@@ -50,19 +63,30 @@ describe "controllers" do
 
     before :each do
       class_double(Messanger)
-      expect(Messanger).to receive(:new).with({account_id: "accountid", auth_id: "authid"}).and_return(messanger_double)
+      expect(Messanger).to receive(:new).with({account_id: "secret_accountid_12345", auth_id: "secret_authid_12345"}).and_return(messanger_double)
     end
 
     context "with valid params" do
-      it "should post message" do
+      before (:each) do
         expect(messanger_double).to receive(:send_message).with({from_number: "111", to_number: "222", body: "lorem"}).
             and_return(true)
         expect_any_instance_of(app).to receive(:erb).
-          with(:index, locals: {account: {account_id: "accountid", auth_id: "authid", from_number: "111", to_number: "222", body: ""}, flash: {success_flash: "Message was sent successfully."}}).
+          with(:index, locals: {account: {account_id: "secret_accountid_12345", auth_id: "secret_authid_12345", from_number: "111", to_number: "222", body: ""}, flash: {success_flash: "Message was sent successfully."}}).
           and_return("data")
+      end
 
-        post '/send_message', {account_id: "accountid", auth_id: "authid", from_number: "111", to_number: "222", body: "lorem"}
+      it "should post message" do
+        post '/send_message', {account_id: "secret_accountid_12345", auth_id: "secret_authid_12345", from_number: "111", to_number: "222", body: "lorem"}
         expect(last_response.body).to eq("data")
+      end
+
+      it "should not display credentials in logs" do
+        steal_logger
+
+        post('/send_message', {account_id: "secret_accountid_12345", auth_id: "secret_authid_12345", from_number: "111", to_number: "222", body: "lorem"})
+
+        expect(app.logger.log).not_to include "secret_accountid_12345"
+        expect(app.logger.log).not_to include "secret_authid_12345"
       end
     end
 
@@ -71,10 +95,10 @@ describe "controllers" do
         expect(messanger_double).to receive(:send_message).with({from_number: "111", to_number: "222", body: "lorem"}).
             and_return(false)
         expect_any_instance_of(app).to receive(:erb).
-          with(:index, locals: {account: {account_id: "accountid", auth_id: "authid", from_number: "111", to_number: "222", body: "lorem"}, flash: {error_flash: "Message sending failed."}}).
+          with(:index, locals: {account: {account_id: "secret_accountid_12345", auth_id: "secret_authid_12345", from_number: "111", to_number: "222", body: "lorem"}, flash: {error_flash: "Message sending failed."}}).
           and_return("data")
 
-        post '/send_message', {account_id: "accountid", auth_id: "authid", from_number: "111", to_number: "222", body: "lorem"}
+        post '/send_message', {account_id: "secret_accountid_12345", auth_id: "secret_authid_12345", from_number: "111", to_number: "222", body: "lorem"}
         expect(last_response.body).to eq("data")
       end
     end
