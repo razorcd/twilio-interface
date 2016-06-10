@@ -22,6 +22,7 @@ ENV['RACK_ENV'] = 'test'
 require 'rack/test'
 require 'rspec'
 require 'capybara/rspec'
+require 'vcr'
 require_relative './spec_support/spec_support'
 
 require File.expand_path '../../app.rb', __FILE__
@@ -114,4 +115,9 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+end
+
+VCR.configure do |config|
+  config.cassette_library_dir = "fixtures/vcr_cassettes"
+  config.hook_into :webmock
 end

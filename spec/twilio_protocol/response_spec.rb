@@ -55,14 +55,14 @@ describe "Response" do
     it "should return response messages as hashes" do
       expect(Response.new(good_response_body, 201).messages).to eq([
           {
-            "sid" => "sid",
+            # "sid" => "sid",
             "date_created" => "Mon, 23 May 2016 10:21:45 +0000",
             "date_updated" => "Mon, 23 May 2016 10:22:01 +0000",
             "date_sent" => "Mon, 23 May 2016 10:21:45 +0000",
-            "account_sid" => "AccountSID",
+            # "account_sid" => "AccountSID",
             "to" => "+4915205244797",
             "from" => "+17083406400",
-            "messaging_service_sid" => nil,
+            # "messaging_service_sid" => nil,
             "body" => "test1234",
             "status" => "delivered",
             "num_segments" => "1",
@@ -73,10 +73,10 @@ describe "Response" do
             "price_unit" => "USD",
             "error_code" => nil,
             "error_message" => nil,
-            "uri" => "/2010-04-01/Accounts/AccountSID/Messages/sid.json",
-            "subresource_uris" => {
-              "media" => "/2010-04-01/Accounts/AccountSID/Messages/sid/Media.json"
-            }
+            # "uri" => "/2010-04-01/Accounts/AccountSID/Messages/sid.json",
+            # "subresource_uris" => {
+            #   "media" => "/2010-04-01/Accounts/AccountSID/Messages/sid/Media.json"
+            # }
           }
         ])
     end
