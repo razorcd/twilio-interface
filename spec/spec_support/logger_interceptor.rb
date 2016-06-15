@@ -1,17 +1,19 @@
 module LoggerInterceptor
-
-    # will let you inspect the logged data for current spec
-    # use:
-    #   steal_logger
-    #   post(....)
-    #   expect(app.logger.log).not_to include "secret_accountid_12345"
-    #
-    # will catch any logging of messages. E.g.:
-    #   logger.debug params.to_s
-    #   logger.info params.to_s
-    #   logger.warn params.to_s
-    #   logger.fatal params.to_s
-    #   logger.add 1, params.to_s
+  # will let you intercept the logged data for current spec
+  # use:
+  #   steal_logger!
+  #   post(....)
+  #   expect(app.logger.log).not_to include "secret_accountid_12345"
+  #   release_logger!
+  #
+  # will catch any logging of messages. E.g.:
+  #   logger.debug params.to_s
+  #   logger.info params.to_s
+  #   logger.warn params.to_s
+  #   logger.fatal params.to_s
+  #   logger.add 1, params.to_s
+  #
+  # Ensure `release_logger!` is called after each spec ends.
 
   def steal_logger!
     current_logger= app.logger

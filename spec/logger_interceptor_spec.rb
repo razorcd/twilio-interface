@@ -40,8 +40,14 @@ describe "spec_support/logger_interceptor" do
 
       expect { release_logger! }.not_to raise_error
     end
+  end
 
-    it "should intercept the logging messages" do
+  context "logging messages" do
+    after :each do
+      release_logger!
+    end
+
+    it "should be intercepted" do
       steal_logger!
 
       expect(app.logger.log).to eq ""
@@ -57,22 +63,18 @@ describe "spec_support/logger_interceptor" do
       expect(app.logger.log).to include "log warn test message"
       expect(app.logger.log).to include "log fatal test message"
       expect(app.logger.log).to include "log add 1 test message"
-
-      release_logger!
     end
 
-    it "should intercept logger in controllers" do
+    it "should be intercepted in controllers" do
         steal_logger!
 
         app.get("/test_with_logging") do
-          logger.info "test_with_logging message"
+          logger.info "test_with_logging from controller message"
         end
 
         get("/test_with_logging")
 
-        expect(app.logger.log).to eq "test_with_logging message"
-
-        release_logger!
+        expect(app.logger.log).to eq "test_with_logging from controller message"
     end
   end
 end
