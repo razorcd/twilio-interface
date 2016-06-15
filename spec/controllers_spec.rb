@@ -32,16 +32,15 @@ describe "controllers" do
       end
 
       it "should not display credentials in logs" do
-        steal_logger
+        steal_logger!
 
         post '/list_messages', {account_id: "secret_accountid_12345", auth_id: "secret_authid_12345", from_number: "111", to_number: "222", body: "lorem"}
 
         expect(app.logger.log).not_to include "secret_accountid_12345"
         expect(app.logger.log).not_to include "secret_authid_12345"
+
+        release_logger!
       end
-
-
-
     end
 
     context "with invalid params" do
@@ -81,12 +80,14 @@ describe "controllers" do
       end
 
       it "should not display credentials in logs" do
-        steal_logger
+        steal_logger!
 
         post('/send_message', {account_id: "secret_accountid_12345", auth_id: "secret_authid_12345", from_number: "111", to_number: "222", body: "lorem"})
 
         expect(app.logger.log).not_to include "secret_accountid_12345"
         expect(app.logger.log).not_to include "secret_authid_12345"
+
+        release_logger!
       end
     end
 
