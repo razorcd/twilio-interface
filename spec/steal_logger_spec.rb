@@ -34,11 +34,11 @@ describe "spec_support/logger_interceptor" do
       expect(app.logger.instance_variables).not_to include :@log
     end
 
-    it "should raise if already called" do
+    it "should NOT raise if already called" do
       steal_logger!
       release_logger!
 
-      expect { release_logger! }.to raise_error RuntimeError
+      expect { release_logger! }.not_to raise_error
     end
 
     it "should intercept the logging messages" do
