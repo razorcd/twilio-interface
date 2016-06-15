@@ -1,4 +1,4 @@
-module SpecSupport
+module LoggerInterceptor
 
     # will let you inspect the logged data for current spec
     # use:
@@ -13,7 +13,7 @@ module SpecSupport
     #   logger.fatal params.to_s
     #   logger.add 1, params.to_s
 
-  def steal_logger
+  def steal_logger!
     current_logger= app.logger
 
     if defined?(@@old_logger) && @@old_logger.nil?.!
@@ -42,7 +42,7 @@ module SpecSupport
     current_logger
   end
 
-  def release_logger
+  def release_logger!
     current_logger= app.logger
 
     if defined?(@@old_logger).! || @@old_logger.nil?
@@ -63,5 +63,4 @@ module SpecSupport
     allow_any_instance_of(app).to receive(:logger).and_return @@old_logger
     @@old_logger = nil
   end
-
 end
