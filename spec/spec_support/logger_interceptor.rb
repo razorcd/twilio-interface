@@ -17,7 +17,7 @@ module LoggerInterceptor
     current_logger= app.logger
 
     if defined?(@@old_logger) && @@old_logger.nil?.!
-      raise "Logger was already stolen. Release the logger after each use case."
+      raise RuntimeError, "Logger was already stolen. Release the logger after each use case."
     else
       @@old_logger= current_logger
     end
@@ -46,7 +46,7 @@ module LoggerInterceptor
     current_logger= app.logger
 
     if defined?(@@old_logger).! || @@old_logger.nil?
-      raise "Logger was not stolen. Steal the logger before releasing it."
+      raise RuntimeError, "Logger was not stolen. Steal the logger before releasing it."
     end
 
     def current_logger.remove_instace_log

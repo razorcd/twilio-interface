@@ -20,7 +20,7 @@ describe "spec_support/logger_interceptor" do
 
     it "should raise if already called" do
       steal_logger!
-      expect { steal_logger! }.to raise_error
+      expect { steal_logger! }.to raise_error RuntimeError
     end
   end
 
@@ -38,7 +38,7 @@ describe "spec_support/logger_interceptor" do
       steal_logger!
       release_logger!
 
-      expect { release_logger! }.to raise_error
+      expect { release_logger! }.to raise_error RuntimeError
     end
 
     it "should intercept the logging messages" do
